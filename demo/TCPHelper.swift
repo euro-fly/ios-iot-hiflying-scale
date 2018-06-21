@@ -40,7 +40,6 @@ extension Character {
         case .failure(let error):
             print(String(describing: error))
         }
-        
     }
 
     static private func sendRequest(string: String, using client: TCPClient) -> String? {

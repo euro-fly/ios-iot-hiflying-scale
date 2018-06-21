@@ -76,6 +76,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dZ4-Le-U6j">
                                 <rect key="frame" x="164" y="349" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="connectButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FdK-LA-SHL"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -107,6 +110,7 @@
                     </view>
                     <connections>
                         <outlet property="butConnect" destination="M2K-Ex-yds" id="rHM-0H-hjG"/>
+                        <outlet property="connectButton" destination="dZ4-Le-U6j" id="DEA-yj-Guo"/>
                         <outlet property="progress" destination="anH-68-myp" id="XWS-pR-6FT"/>
                         <outlet property="switcher" destination="krm-qM-O3l" id="qq0-nU-zLb"/>
                         <outlet property="txtPwd" destination="R14-ME-uVA" id="CNA-3F-AHN"/>

@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "Demo-Swift.h"
 //#import "smartlinklib_7x.h"
 #import "HFSmartLink.h"
 #import "HFSmartLinkDeviceInfo.h"
@@ -37,6 +38,10 @@
     self.txtPwd.text = [self getspwdByssid:self.txtSSID.text];
     _txtPwd.delegate=self;
     _txtSSID.delegate=self;
+}
+
+- (IBAction)connectButtonPressed:(id)sender {
+    [TCPHelper ConnectToDevice];
 }
 
 - (IBAction)butPressed:(id)sender {
