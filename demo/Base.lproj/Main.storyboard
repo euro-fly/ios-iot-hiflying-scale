@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Qt9-Kp-DXd">
+                                <rect key="frame" x="32" y="80" width="311" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="wujianyu" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R14-ME-uVA">
+                                <rect key="frame" x="32" y="135" width="311" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M2K-Ex-yds">
+                                <rect key="frame" x="32" y="216" width="311" height="30"/>
+                                <color key="backgroundColor" red="0.31764705879999999" green="0.73725490199999999" blue="0.098039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="connect">
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="butPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ENc-Ea-TpZ"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上海汉枫电子科技智能配网" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ANq-OS-WMB">
+                                <rect key="frame" x="32" y="28" width="311" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="anH-68-myp">
+                                <rect key="frame" x="32" y="270" width="311" height="2"/>
+                            </progressView>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="krm-qM-O3l">
+                                <rect key="frame" x="294" y="175" width="51" height="31"/>
+                                <connections>
+                                    <action selector="swPressed:" destination="BYZ-38-t0r" eventType="valueChanged" id="Vio-gI-Q6L"/>
+                                </connections>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="配置单个设备" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ktI-wg-KUE">
+                                <rect key="frame" x="36" y="190" width="102" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="V7.x" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ICH-LN-aj3">
+                                <rect key="frame" x="311" y="57" width="32" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="0hP-Bu-RdB"/>
+                                    <constraint firstAttribute="width" constant="32" id="bEB-mF-gRV"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" red="0.53725490200000003" green="0.53725490200000003" blue="0.53725490200000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dZ4-Le-U6j">
+                                <rect key="frame" x="164" y="349" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Qt9-Kp-DXd" firstAttribute="top" secondItem="ICH-LN-aj3" secondAttribute="bottom" constant="2" id="B3z-t4-meO"/>
+                            <constraint firstItem="krm-qM-O3l" firstAttribute="top" secondItem="R14-ME-uVA" secondAttribute="bottom" constant="10" id="BcH-SB-hHe"/>
+                            <constraint firstItem="dZ4-Le-U6j" firstAttribute="top" secondItem="anH-68-myp" secondAttribute="bottom" constant="77" id="Cni-zo-lhy"/>
+                            <constraint firstItem="M2K-Ex-yds" firstAttribute="top" secondItem="krm-qM-O3l" secondAttribute="bottom" constant="10" id="Ei2-zx-Nt6"/>
+                            <constraint firstItem="R14-ME-uVA" firstAttribute="trailing" secondItem="krm-qM-O3l" secondAttribute="trailing" id="HXc-9f-Je8"/>
+                            <constraint firstItem="ANq-OS-WMB" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="J4a-z2-tms"/>
+                            <constraint firstItem="R14-ME-uVA" firstAttribute="top" secondItem="Qt9-Kp-DXd" secondAttribute="bottom" constant="25" id="RiZ-JZ-Eql"/>
+                            <constraint firstItem="R14-ME-uVA" firstAttribute="leading" secondItem="ktI-wg-KUE" secondAttribute="leading" id="SMa-DK-FXM"/>
+                            <constraint firstItem="ANq-OS-WMB" firstAttribute="leading" secondItem="Qt9-Kp-DXd" secondAttribute="leading" id="Uds-pq-l6b"/>
+                            <constraint firstItem="M2K-Ex-yds" firstAttribute="top" secondItem="ktI-wg-KUE" secondAttribute="bottom" constant="5" id="VqA-Ef-Vl5"/>
+                            <constraint firstItem="ICH-LN-aj3" firstAttribute="top" secondItem="ANq-OS-WMB" secondAttribute="bottom" constant="8" symbolic="YES" id="Ysy-TX-fVe"/>
+                            <constraint firstItem="anH-68-myp" firstAttribute="trailing" secondItem="M2K-Ex-yds" secondAttribute="trailing" id="aKx-c0-jDp"/>
+                            <constraint firstItem="anH-68-myp" firstAttribute="top" secondItem="M2K-Ex-yds" secondAttribute="bottom" constant="24" id="aPz-rc-u90"/>
+                            <constraint firstItem="Qt9-Kp-DXd" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bgb-EA-qgt"/>
+                            <constraint firstItem="Qt9-Kp-DXd" firstAttribute="trailing" secondItem="R14-ME-uVA" secondAttribute="trailing" id="dX2-WU-dF3"/>
+                            <constraint firstItem="ICH-LN-aj3" firstAttribute="trailing" secondItem="ANq-OS-WMB" secondAttribute="trailing" id="hXE-cQ-qc2"/>
+                            <constraint firstItem="ICH-LN-aj3" firstAttribute="trailing" secondItem="Qt9-Kp-DXd" secondAttribute="trailing" id="m86-rc-Ypj"/>
+                            <constraint firstItem="R14-ME-uVA" firstAttribute="leading" secondItem="Qt9-Kp-DXd" secondAttribute="leading" id="oQu-V8-EsU"/>
+                            <constraint firstItem="ktI-wg-KUE" firstAttribute="leading" secondItem="M2K-Ex-yds" secondAttribute="leading" id="slp-pi-gTT"/>
+                            <constraint firstItem="krm-qM-O3l" firstAttribute="trailing" secondItem="M2K-Ex-yds" secondAttribute="trailing" id="uV0-vT-nuI"/>
+                            <constraint firstItem="ANq-OS-WMB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="16" id="wop-C1-EHx"/>
+                            <constraint firstItem="dZ4-Le-U6j" firstAttribute="centerX" secondItem="anH-68-myp" secondAttribute="centerX" id="zCz-2l-kFc"/>
+                            <constraint firstItem="anH-68-myp" firstAttribute="leading" secondItem="M2K-Ex-yds" secondAttribute="leading" id="zHf-Qu-gap"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="butConnect" destination="M2K-Ex-yds" id="rHM-0H-hjG"/>
+                        <outlet property="progress" destination="anH-68-myp" id="XWS-pR-6FT"/>
+                        <outlet property="switcher" destination="krm-qM-O3l" id="qq0-nU-zLb"/>
+                        <outlet property="txtPwd" destination="R14-ME-uVA" id="CNA-3F-AHN"/>
+                        <outlet property="txtSSID" destination="Qt9-Kp-DXd" id="9JE-Wx-tQf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="322" y="375"/>
+        </scene>
+    </scenes>
+</document>
