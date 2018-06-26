@@ -81,10 +81,17 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m1y-1j-cMv">
-                                <rect key="frame" x="151.5" y="401" width="71" height="30"/>
+                                <rect key="frame" x="152" y="401" width="71" height="30"/>
                                 <state key="normal" title="Read Data"/>
                                 <connections>
                                     <action selector="readButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Zhx-b5-cPg"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BMi-o0-7L8">
+                                <rect key="frame" x="155" y="451" width="65" height="30"/>
+                                <state key="normal" title="Net Clear"/>
+                                <connections>
+                                    <action selector="killButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Cqo-B0-yGq"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -104,7 +111,9 @@
                             <constraint firstItem="ICH-LN-aj3" firstAttribute="top" secondItem="ANq-OS-WMB" secondAttribute="bottom" constant="8" symbolic="YES" id="Ysy-TX-fVe"/>
                             <constraint firstItem="anH-68-myp" firstAttribute="trailing" secondItem="M2K-Ex-yds" secondAttribute="trailing" id="aKx-c0-jDp"/>
                             <constraint firstItem="anH-68-myp" firstAttribute="top" secondItem="M2K-Ex-yds" secondAttribute="bottom" constant="24" id="aPz-rc-u90"/>
+                            <constraint firstItem="BMi-o0-7L8" firstAttribute="centerX" secondItem="m1y-1j-cMv" secondAttribute="centerX" id="agg-gP-hvd"/>
                             <constraint firstItem="Qt9-Kp-DXd" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bgb-EA-qgt"/>
+                            <constraint firstItem="BMi-o0-7L8" firstAttribute="top" secondItem="m1y-1j-cMv" secondAttribute="bottom" constant="20" id="cXf-yM-NfV"/>
                             <constraint firstItem="Qt9-Kp-DXd" firstAttribute="trailing" secondItem="R14-ME-uVA" secondAttribute="trailing" id="dX2-WU-dF3"/>
                             <constraint firstItem="ICH-LN-aj3" firstAttribute="trailing" secondItem="ANq-OS-WMB" secondAttribute="trailing" id="hXE-cQ-qc2"/>
                             <constraint firstItem="m1y-1j-cMv" firstAttribute="centerX" secondItem="dZ4-Le-U6j" secondAttribute="centerX" id="kJY-pq-gv7"/>
@@ -120,6 +129,7 @@
                     <connections>
                         <outlet property="butConnect" destination="M2K-Ex-yds" id="rHM-0H-hjG"/>
                         <outlet property="connectButton" destination="dZ4-Le-U6j" id="DEA-yj-Guo"/>
+                        <outlet property="killButton" destination="BMi-o0-7L8" id="s2K-Zb-amK"/>
                         <outlet property="progress" destination="anH-68-myp" id="XWS-pR-6FT"/>
                         <outlet property="readButton" destination="m1y-1j-cMv" id="kjg-UG-PUm"/>
                         <outlet property="switcher" destination="krm-qM-O3l" id="qq0-nU-zLb"/>
