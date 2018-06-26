@@ -16,10 +16,12 @@
 @property (weak, nonatomic) IBOutlet UIProgressView *progress;
 @property (weak, nonatomic) IBOutlet UISwitch *switcher;
 @property (weak, nonatomic) IBOutlet UIButton *connectButton;
+@property (weak, nonatomic) IBOutlet UIButton *readButton;
 
 - (IBAction)butPressed:(id)sender;
 - (IBAction)swPressed:(id)sender;
 - (IBAction)connectButtonPressed:(id)sender;
+- (IBAction)readButtonPressed:(id)sender;
 
 @end
 

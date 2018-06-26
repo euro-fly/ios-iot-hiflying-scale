@@ -44,6 +44,10 @@
     [TCPHelper ConnectToDevice];
 }
 
+- (IBAction)readButtonPressed:(id)sender {
+    [TCPHelper ReadData];
+}
+
 - (IBAction)butPressed:(id)sender {
     NSString * ssidStr= self.txtSSID.text;
     NSString * pswdStr = self.txtPwd.text;

@@ -18,14 +18,16 @@ extension Character {
     
     //var client: TCPClient?
 
-    static func asciiToHex(ascii: String) -> Array<Byte> {
+    static func asciiToHex(ascii: String, len: Int) -> Array<Byte> {
         var byteArray = [Byte]()
         //let array = ascii.ascii
         for x in ascii.utf8 {
             byteArray += [x]
         }
+        while (byteArray.count < len) {
+            byteArray += [0x00]
+        }
         return byteArray
-        
     }
     
     @objc static func ConnectToDevice() {
@@ -33,7 +35,21 @@ extension Character {
         switch client.connect(timeout: 10) {
         case .success:
             print("Connected to host \(client.address)")
-            if let response = TCPHelper.sendRequest(string: "GET / HTTP/1.0\n\n", using: client) {
+            if let response = TCPHelper.sendRequest(using: client) {
+                print("Response:")
+                print(response)
+            }
+        case .failure(let error):
+            print(String(describing: error))
+        }
+    }
+    
+    @objc static func ReadData() {
+        let client = TCPClient(address: "api.swiftechie.com", port: Int32(7799))
+        switch client.connect(timeout: 10) {
+        case .success:
+            print("Connected to host \(client.address)")
+            if let response = TCPHelper.sendRequestTwo(using: client) {
                 print("Response:")
                 print(response)
             }
@@ -42,12 +58,27 @@ extension Character {
         }
     }
 
-    static private func sendRequest(string: String, using client: TCPClient) -> String? {
+    static private func sendRequest(using client: TCPClient) -> String? {
         print("Sending data ... ")
-        var cmd:[Byte] = [0x12] + TCPHelper.asciiToHex(ascii: "F0FE6B790583") + // command id
-            [0x01, // type: 0x01:register   0x02:unregister
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // userid
-                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00] // org
+        var cmd:[Byte] = [0x12] + TCPHelper.asciiToHex(ascii: "F0FE6BAFB1DB", len: 12) + // command id
+            [0x01] + // type: 0x01:register   0x02:unregister
+            TCPHelper.asciiToHex(ascii: "152894137336597697", len: 20) + // userid
+                [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00] // org
+        switch client.send(data: cmd) {
+        case .success:
+            print("Got a response...")
+            return TCPHelper.readResponse(from: client)
+        case .failure(let error):
+            print("Error: " + String(describing: error))
+            return nil
+        }
+    }
+    
+    static private func sendRequestTwo(using client: TCPClient) -> String? {
+        print("Sending data ... ")
+        var cmd:[Byte] = [0x11] + TCPHelper.asciiToHex(ascii: "F0FE6BAFB1DB", len: 12) + // command
+            TCPHelper.asciiToHex(ascii: "152894137336597697", len: 20) + // userid
+            [0x00, 0x00, 0x00, 0x00] // get ALL data...
         switch client.send(data: cmd) {
         case .success:
             print("Got a response...")
@@ -59,7 +90,7 @@ extension Character {
     }
     
     static private func readResponse(from client: TCPClient) -> String? {
-        let response = client.read(1024*10, timeout: 10)
+        let response = client.read(1024*10, timeout: 600)
         print("Read response...")
         
         let res = response == nil ? -1 : Int(response![1])
