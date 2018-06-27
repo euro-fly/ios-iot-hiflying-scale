@@ -42,6 +42,7 @@ extension Character {
         case .failure(let error):
             print(String(describing: error))
         }
+        client.close()
     }
     
     @objc static func ReadData() {
@@ -56,6 +57,7 @@ extension Character {
         case .failure(let error):
             print(String(describing: error))
         }
+        client.close()
     }
     
     @objc static func KillData() {
@@ -70,6 +72,7 @@ extension Character {
         case .failure(let error):
             print(String(describing: error))
         }
+        client.close()
     }
     
     static private func unixTimeToNSDate(time: Int32) -> NSDate {
@@ -150,20 +153,20 @@ extension Character {
     //TODO: Parse the response data...
     //ASSUMING we only get the last weight data...
     static private func parseWeightData(data: Array<Byte>) -> Array<Byte>? {
-        //
-        var byteCount : Array<Byte> = [0x00, 0x00, 0x00, data[1]]
-        var number = byteArrayToInt(bytes: byteCount)
-        var instance = HTPeopleGeneral()
+    
+        //var byteCount : Array<Byte> = [0x00, 0x00, 0x00, data[1]]
+        //var number = byteArrayToInt(bytes: byteCount)   -- we can skip using the second byte as a counter, because... we know that the data will always be sent over in groups of 11.
+        let instance = HTPeopleGeneral()
         var x = 2
         while x < data.count {
-            var dateBytes : Array<Byte> = [data[x], data[x+1],data[x+2],data[x+3]]
-            var impedanceBytes : Array<Byte> = [data[x+4], data[x+5],data[x+6],data[x+7]]
-            var weightBytes : Array<Byte> = [0x00,0x00,data[x+8],data[x+9]]
-            var timestamp = byteArrayToInt(bytes: dateBytes)
-            var date = unixTimeToNSDate(time: timestamp)
-            var impedance = byteArrayToInt(bytes: impedanceBytes)
-            var weight = CGFloat(byteArrayToInt(bytes: weightBytes)) / 10
-            var fat = instance.getBodyfatWithweightKg(weight, heightCm: 168, sex: HTSexType.male, age: 30, impedance: Int(impedance))
+            let dateBytes : Array<Byte> = [data[x], data[x+1],data[x+2],data[x+3]]
+            let impedanceBytes : Array<Byte> = [data[x+4], data[x+5],data[x+6],data[x+7]]
+            let weightBytes : Array<Byte> = [0x00,0x00,data[x+8],data[x+9]]
+            let timestamp = byteArrayToInt(bytes: dateBytes)
+            let date = unixTimeToNSDate(time: timestamp)
+            let impedance = byteArrayToInt(bytes: impedanceBytes)
+            let weight = CGFloat(byteArrayToInt(bytes: weightBytes)) / 10
+            let fat = instance.getBodyfatWithweightKg(weight, heightCm: 168, sex: HTSexType.male, age: 30, impedance: Int(impedance))
             print("DATA:")
             print(date)
             print(weight)
