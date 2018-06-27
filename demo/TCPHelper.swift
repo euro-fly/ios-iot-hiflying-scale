@@ -18,7 +18,7 @@ extension Character {
     
     //var client: TCPClient?
 
-    static func asciiToHex(ascii: String, len: Int) -> Array<Byte> {
+    static func asciiToHex(ascii: String, len: Int32) -> Array<Byte> {
         var byteArray = [Byte]()
         //let array = ascii.ascii
         for x in ascii.utf8 {
@@ -72,20 +72,27 @@ extension Character {
         }
     }
     
-    static private func unixTimeToNSDate(time: Int) -> NSDate {
+    static private func unixTimeToNSDate(time: Int32) -> NSDate {
         return NSDate(timeIntervalSince1970: Double(time))
     }
     
     static private func NSDateToUnixTime(date: NSDate) -> [Byte] {
         var unixTime = date.timeIntervalSince1970
         var array: [UInt8] = []
-        var n = Int(unixTime)
+        var n = Int32(unixTime)
         while n > 0
         {
             array.append(UInt8(n & 0xff))
             n >>= 8
         }
         return array
+    }
+    
+    static private func byteArrayToInt(bytes: Array<Byte>) -> Int32 {
+        let array = bytes
+        let data = Data(bytes: array)
+        let value = UInt32(bigEndian: data.withUnsafeBytes { $0.pointee })
+        return Int32(value);
     }
     
     static private func sendRequest(using client: TCPClient) -> Array<Byte>? {
@@ -112,7 +119,7 @@ extension Character {
         switch client.send(data: cmd) {
         case .success:
             print("Got a response...")
-            return TCPHelper.readResponse(from: client)
+            return TCPHelper.parseWeightData(data: TCPHelper.readResponse(from: client)!)
         case .failure(let error):
             print("Error: " + String(describing: error))
             return nil
@@ -135,9 +142,50 @@ extension Character {
     static private func readResponse(from client: TCPClient) -> Array<Byte>? {
         let response = client.read(1024*10, timeout: 600)
         print("Read response...")
-        let res = response == nil ? -1 : Int(response![1])
+        let res = response == nil ? -1 : Int32(response![1])
         print(response as Any)
         return response
+    }
+    
+    //TODO: Parse the response data...
+    //ASSUMING we only get the last weight data...
+    static private func parseWeightData(data: Array<Byte>) -> Array<Byte>? {
+        //
+        var byteCount : Array<Byte> = [0x00, 0x00, 0x00, data[1]]
+        var number = byteArrayToInt(bytes: byteCount)
+        var instance = HTPeopleGeneral()
+        var x = 2
+        while x < data.count {
+            var dateBytes : Array<Byte> = [data[x], data[x+1],data[x+2],data[x+3]]
+            var impedanceBytes : Array<Byte> = [data[x+4], data[x+5],data[x+6],data[x+7]]
+            var weightBytes : Array<Byte> = [0x00,0x00,data[x+8],data[x+9]]
+            var timestamp = byteArrayToInt(bytes: dateBytes)
+            var date = unixTimeToNSDate(time: timestamp)
+            var impedance = byteArrayToInt(bytes: impedanceBytes)
+            var weight = CGFloat(byteArrayToInt(bytes: weightBytes)) / 10
+            var fat = instance.getBodyfatWithweightKg(weight, heightCm: 168, sex: HTSexType.male, age: 30, impedance: Int(impedance))
+            print("DATA:")
+            print(date)
+            print(weight)
+            switch(fat) {
+            case HTBodyfatErrorType.none:
+                print(instance.htBodyfatPercentage)
+                break
+            case HTBodyfatErrorType.age:
+                print("Error occurred due to age being outside 6..99 range")
+                break
+            case HTBodyfatErrorType.impedance:
+                print("Error occurred due to invalid impedance data.")
+                break
+            case HTBodyfatErrorType.weight:
+                print("Error occurred due to weight being outside 50..200kg range")
+                break
+            default:
+                print("An unexpected error occurred.")
+            }
+            x+=11
+        }
+        return data
     }
     
 }

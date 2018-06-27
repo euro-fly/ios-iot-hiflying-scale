@@ -55,8 +55,7 @@
     [TCPHelper KillData];
     HTPeopleGeneral *instance = [[HTPeopleGeneral alloc]init];
     
-    
-    HTBodyfatErrorType errType = [instance getBodyfatWithweightKg:80.0 heightCm:165.0 sex:HTSexTypeMale age:23 impedance:200];
+    HTBodyfatErrorType errType = [instance getBodyfatWithweightKg:67.9 heightCm:165.0 sex:HTSexTypeMale age:23 impedance:9569024];
     if (errType == HTBodyfatErrorTypeNone) {
         NSLog(@"%f", instance.htBodyfatPercentage);
     }
