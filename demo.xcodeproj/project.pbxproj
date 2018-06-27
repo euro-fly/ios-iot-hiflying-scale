@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		160D750420E32434009D761E /* libHTBodyfat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 160D750320E32433009D761E /* libHTBodyfat.a */; };
 		168C03CA20DBA5C600387478 /* Pods_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 168C03C920DBA5C600387478 /* Pods_Demo.framework */; };
 		168C03CC20DBA5E400387478 /* Pods_DemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 168C03CB20DBA5E400387478 /* Pods_DemoTests.framework */; };
 		168C03CE20DBA5E400387478 /* Pods_DemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 168C03CD20DBA5E400387478 /* Pods_DemoUITests.framework */; };
@@ -44,6 +45,8 @@
 /* Begin PBXFileReference section */
 		02C04166FEDF963485466038 /* Pods-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		065A8F91B279DF271433C8E4 /* Pods-DemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DemoTests/Pods-DemoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		160D750220E32433009D761E /* HTBodyfat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTBodyfat.h; sourceTree = "<group>"; };
+		160D750320E32433009D761E /* libHTBodyfat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libHTBodyfat.a; sourceTree = "<group>"; };
 		168C03C520DBA57500387478 /* Pods_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		168C03C720DBA57800387478 /* SwiftSocket.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftSocket.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		168C03C920DBA5C600387478 /* Pods_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,6 +91,7 @@
 				168C03CA20DBA5C600387478 /* Pods_Demo.framework in Frameworks */,
 				168C03CC20DBA5E400387478 /* Pods_DemoTests.framework in Frameworks */,
 				168C03CE20DBA5E400387478 /* Pods_DemoUITests.framework in Frameworks */,
+				160D750420E32434009D761E /* libHTBodyfat.a in Frameworks */,
 				D0FC2A6F1D13E2AF00665872 /* libsmartlinklib_7x.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -142,6 +146,8 @@
 		D0018A981C0693F100DCE703 = {
 			isa = PBXGroup;
 			children = (
+				160D750220E32433009D761E /* HTBodyfat.h */,
+				160D750320E32433009D761E /* libHTBodyfat.a */,
 				D0018AA31C0693F100DCE703 /* Demo */,
 				D0018ABD1C0693F100DCE703 /* DemoTests */,
 				D0018AC81C0693F100DCE703 /* DemoUITests */,

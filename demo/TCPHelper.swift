@@ -71,8 +71,24 @@ extension Character {
             print(String(describing: error))
         }
     }
-
-    static private func sendRequest(using client: TCPClient) -> String? {
+    
+    static private func unixTimeToNSDate(time: Int) -> NSDate {
+        return NSDate(timeIntervalSince1970: Double(time))
+    }
+    
+    static private func NSDateToUnixTime(date: NSDate) -> [Byte] {
+        var unixTime = date.timeIntervalSince1970
+        var array: [UInt8] = []
+        var n = Int(unixTime)
+        while n > 0
+        {
+            array.append(UInt8(n & 0xff))
+            n >>= 8
+        }
+        return array
+    }
+    
+    static private func sendRequest(using client: TCPClient) -> Array<Byte>? {
         print("Sending data ... ")
         var cmd:[Byte] = [0x12] + TCPHelper.asciiToHex(ascii: "F0FE6BAFB1DB", len: 12) + // command id
             [0x01] + // type: 0x01:register   0x02:unregister
@@ -88,7 +104,7 @@ extension Character {
         }
     }
     
-    static private func sendRequestTwo(using client: TCPClient) -> String? {
+    static private func sendRequestTwo(using client: TCPClient) -> Array<Byte>? {
         print("Sending data ... ")
         var cmd:[Byte] = [0x11] + TCPHelper.asciiToHex(ascii: "F0FE6BAFB1DB", len: 12) + // command
             TCPHelper.asciiToHex(ascii: "152894137336597697", len: 20) + // userid
@@ -103,7 +119,7 @@ extension Character {
         }
     }
     
-    static private func sendRequestThree(using client: TCPClient) -> String? {
+    static private func sendRequestThree(using client: TCPClient) -> Array<Byte>? {
         print("Sending data ... ")
         var cmd:[Byte] = [0x14] + TCPHelper.asciiToHex(ascii: "F0FE6BAFB1DB", len: 12)
         switch client.send(data: cmd) {
@@ -116,13 +132,12 @@ extension Character {
         }
     }
     
-    static private func readResponse(from client: TCPClient) -> String? {
+    static private func readResponse(from client: TCPClient) -> Array<Byte>? {
         let response = client.read(1024*10, timeout: 600)
         print("Read response...")
-        
         let res = response == nil ? -1 : Int(response![1])
         print(response as Any)
-        return String(bytes: response!, encoding: .utf8)
+        return response
     }
     
 }

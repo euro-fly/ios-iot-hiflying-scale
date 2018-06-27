@@ -11,6 +11,7 @@
 //#import "smartlinklib_7x.h"
 #import "HFSmartLink.h"
 #import "HFSmartLinkDeviceInfo.h"
+#import "HTBodyfat.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
 
 @interface ViewController ()
@@ -25,6 +26,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
     // Do any additional setup after loading the view, typically from a nib.
     smtlk = [HFSmartLink shareInstence];
     smtlk.isConfigOneDevice = true;
@@ -50,6 +53,16 @@
 
 - (IBAction)killButtonPressed:(id)sender {
     [TCPHelper KillData];
+    HTPeopleGeneral *instance = [[HTPeopleGeneral alloc]init];
+    
+    
+    HTBodyfatErrorType errType = [instance getBodyfatWithweightKg:80.0 heightCm:165.0 sex:HTSexTypeMale age:23 impedance:200];
+    if (errType == HTBodyfatErrorTypeNone) {
+        NSLog(@"%f", instance.htBodyfatPercentage);
+    }
+    else {
+        NSLog(@"%ld", (long)errType);
+    }
 }
 
 - (IBAction)butPressed:(id)sender {
