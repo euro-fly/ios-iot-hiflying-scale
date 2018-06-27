@@ -53,15 +53,6 @@
 
 - (IBAction)killButtonPressed:(id)sender {
     [TCPHelper KillData];
-    HTPeopleGeneral *instance = [[HTPeopleGeneral alloc]init];
-    
-    HTBodyfatErrorType errType = [instance getBodyfatWithweightKg:67.9 heightCm:165.0 sex:HTSexTypeMale age:23 impedance:9569024];
-    if (errType == HTBodyfatErrorTypeNone) {
-        NSLog(@"%f", instance.htBodyfatPercentage);
-    }
-    else {
-        NSLog(@"%ld", (long)errType);
-    }
 }
 
 - (IBAction)butPressed:(id)sender {

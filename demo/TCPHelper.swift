@@ -15,9 +15,7 @@ extension Character {
 
 @objc class TCPHelper: NSObject {
 
-    
     //var client: TCPClient?
-
     static func asciiToHex(ascii: String, len: Int32) -> Array<Byte> {
         var byteArray = [Byte]()
         //let array = ascii.ascii
