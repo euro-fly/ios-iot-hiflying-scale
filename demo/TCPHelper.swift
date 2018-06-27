@@ -50,8 +50,8 @@ extension Character {
         case .success:
             print("Connected to host \(client.address)")
             if let response = TCPHelper.sendRequestTwo(using: client) {
-                print("Response:")
-                print(response)
+                print("Response received.")
+                //print(response)
             }
         case .failure(let error):
             print(String(describing: error))
@@ -143,7 +143,7 @@ extension Character {
         let response = client.read(1024*10, timeout: 600)
         print("Read response...")
         let res = response == nil ? -1 : Int32(response![1])
-        print(response as Any)
+        //print(response as Any)
         return response
     }
     
