@@ -14,20 +14,29 @@
 #import "HTBodyfat.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
 
+
 @interface ViewController ()
 {
     HFSmartLink * smtlk;
     BOOL isconnecting;
+    
 }
-
+@property (nonatomic) NSString* scaleMacAddress;
+@property (nonatomic) BOOL isReading;
+-(BOOL)startReading;
+-(void)stopReading;
+@property (nonatomic, strong) AVCaptureSession *captureSession;
+@property (nonatomic, strong) AVCaptureVideoPreviewLayer *videoPreviewLayer;
 @end
 
 @implementation ViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
+    _isReading = NO;
+    _captureSession = nil;
+    _scaleMacAddress = nil;
     // Do any additional setup after loading the view, typically from a nib.
     smtlk = [HFSmartLink shareInstence];
     smtlk.isConfigOneDevice = true;
@@ -43,16 +52,83 @@
     _txtSSID.delegate=self;
 }
 
+- (BOOL)startReading {
+    NSError *error;
+    AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice error:&error];
+    if (!input) {
+        NSLog(@"%@", [error localizedDescription]);
+        return NO;
+    }
+    _captureSession = [[AVCaptureSession alloc] init];
+    [_captureSession addInput:input];
+    AVCaptureMetadataOutput *captureMetadataOutput = [[AVCaptureMetadataOutput alloc] init];
+    [_captureSession addOutput:captureMetadataOutput];
+    dispatch_queue_t dispatchQueue;
+    dispatchQueue = dispatch_queue_create("myQueue", NULL);
+    [captureMetadataOutput setMetadataObjectsDelegate:self queue:dispatchQueue];
+    [captureMetadataOutput setMetadataObjectTypes:[NSArray arrayWithObject:AVMetadataObjectTypeQRCode]];
+    _videoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:_captureSession];
+    [_videoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
+    [_videoPreviewLayer setFrame:_viewPreview.layer.bounds];
+    [_viewPreview.layer addSublayer:_videoPreviewLayer];
+    [_captureSession startRunning];
+    return YES;
+}
+
+-(void)stopReading{
+    [_captureSession stopRunning];
+    _captureSession = nil;
+    [_videoPreviewLayer removeFromSuperlayer];
+}
+
+-(void)captureOutput:(AVCaptureOutput *)output didOutputMetadataObjects:(NSArray<__kindof AVMetadataObject *> *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
+    if (metadataObjects != nil && [metadataObjects count] > 0) {
+        AVMetadataMachineReadableCodeObject *metadataObj = [metadataObjects objectAtIndex:0];
+        if ([[metadataObj type] isEqualToString:AVMetadataObjectTypeQRCode]) {
+            NSString *ssid = [[metadataObj stringValue] substringWithRange:NSMakeRange(6, 12)];
+            _scaleMacAddress = ssid;
+            _myLabel.text = ssid;
+            NSLog(@"%@", ssid); // we only want the twelve characters starting from index 6 bc that's our mac address
+            [self performSelectorOnMainThread:@selector(stopReading) withObject:nil waitUntilDone:NO];
+            [_captureButton
+             performSelectorOnMainThread:@selector(setTitle:) withObject:@"Capture QR Code" waitUntilDone:NO];
+            _isReading = NO;
+        }
+    }
+}
+
+
+
 - (IBAction)connectButtonPressed:(id)sender {
-    [TCPHelper ConnectToDevice];
+    if (_scaleMacAddress != nil) {
+        [TCPHelper ConnectToDevice:_scaleMacAddress];
+    }
+    
 }
 
 - (IBAction)readButtonPressed:(id)sender {
-    [TCPHelper ReadData];
+    if (_scaleMacAddress != nil) {
+        [TCPHelper ReadData:_scaleMacAddress];
+    }
 }
 
 - (IBAction)killButtonPressed:(id)sender {
-    [TCPHelper KillData];
+    if (_scaleMacAddress != nil) {
+        [TCPHelper KillData:_scaleMacAddress];
+    }
+}
+
+- (IBAction)captureButtonPressed:(id)sender {
+    if (!_isReading) {
+        if ([self startReading]) {
+            [_captureButton setTitle:@"Capture QR Code" forState:UIControlStateNormal];
+        }
+    }
+    else {
+        [self stopReading];
+    }
+    _isReading = !_isReading;
 }
 
 - (IBAction)butPressed:(id)sender {

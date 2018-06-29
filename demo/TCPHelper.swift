@@ -28,12 +28,12 @@ extension Character {
         return byteArray
     }
     
-    @objc static func ConnectToDevice() {
+    @objc static func ConnectToDevice(_ mac: String) {
         let client = TCPClient(address: "api.swiftechie.com", port: Int32(7799))
         switch client.connect(timeout: 10) {
         case .success:
             print("Connected to host \(client.address)")
-            if let response = TCPHelper.sendRequest(using: client) {
+            if let response = TCPHelper.sendRequest(using: client, mac: mac) {
                 print("Response:")
                 print(response)
             }
@@ -43,12 +43,12 @@ extension Character {
         client.close()
     }
     
-    @objc static func ReadData() {
+    @objc static func ReadData(_ mac: String) {
         let client = TCPClient(address: "api.swiftechie.com", port: Int32(7799))
         switch client.connect(timeout: 10) {
         case .success:
             print("Connected to host \(client.address)")
-            if let response = TCPHelper.sendRequestTwo(using: client) {
+            if let response = TCPHelper.sendRequestTwo(using: client, mac: mac) {
                 print("Response received.")
                 //print(response)
             }
@@ -58,12 +58,12 @@ extension Character {
         client.close()
     }
     
-    @objc static func KillData() {
+    @objc static func KillData(_ mac: String) {
         let client = TCPClient(address: "api.swiftechie.com", port: Int32(7799))
         switch client.connect(timeout: 10) {
         case .success:
             print("Connected to host \(client.address)")
-            if let response = TCPHelper.sendRequestThree(using: client) {
+            if let response = TCPHelper.sendRequestThree(using: client, mac: mac) {
                 print("Response:")
                 print(response)
             }
@@ -96,9 +96,9 @@ extension Character {
         return Int32(value);
     }
     
-    static private func sendRequest(using client: TCPClient) -> Array<Byte>? {
+    static private func sendRequest(using client: TCPClient, mac: String) -> Array<Byte>? {
         print("Sending data ... ")
-        var cmd:[Byte] = [0x12] + TCPHelper.asciiToHex(ascii: "F0FE6BAFB1DB", len: 12) + // command id
+        var cmd:[Byte] = [0x12] + TCPHelper.asciiToHex(ascii: mac, len: 12) + // command id
             [0x01] + // type: 0x01:register   0x02:unregister
             TCPHelper.asciiToHex(ascii: "152894137336597697", len: 20) + // userid
                 [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00] // org
@@ -112,9 +112,9 @@ extension Character {
         }
     }
     
-    static private func sendRequestTwo(using client: TCPClient) -> Array<Byte>? {
+    static private func sendRequestTwo(using client: TCPClient, mac: String) -> Array<Byte>? {
         print("Sending data ... ")
-        var cmd:[Byte] = [0x11] + TCPHelper.asciiToHex(ascii: "F0FE6BAFB1DB", len: 12) + // command
+        var cmd:[Byte] = [0x11] + TCPHelper.asciiToHex(ascii: mac, len: 12) + // command
             TCPHelper.asciiToHex(ascii: "152894137336597697", len: 20) + // userid
             [0x00, 0x00, 0x00, 0x00] // get ALL data...
         switch client.send(data: cmd) {
@@ -127,9 +127,9 @@ extension Character {
         }
     }
     
-    static private func sendRequestThree(using client: TCPClient) -> Array<Byte>? {
+    static private func sendRequestThree(using client: TCPClient, mac: String) -> Array<Byte>? {
         print("Sending data ... ")
-        var cmd:[Byte] = [0x14] + TCPHelper.asciiToHex(ascii: "F0FE6BAFB1DB", len: 12)
+        var cmd:[Byte] = [0x14] + TCPHelper.asciiToHex(ascii: mac, len: 12)
         switch client.send(data: cmd) {
         case .success:
             print("Got a response...")
