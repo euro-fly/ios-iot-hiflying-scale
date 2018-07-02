@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIView *viewPreview;
 @property (weak, nonatomic) IBOutlet UIButton *captureButton;
 @property (weak, nonatomic) IBOutlet UILabel *myLabel;
+@property (weak, nonatomic) IBOutlet UIButton *unbindButton;
 
 - (IBAction)butPressed:(id)sender;
 - (IBAction)swPressed:(id)sender;
@@ -29,6 +30,7 @@
 - (IBAction)readButtonPressed:(id)sender;
 - (IBAction)killButtonPressed:(id)sender;
 - (IBAction)captureButtonPressed:(id)sender;
+- (IBAction)unbindButtonPressed:(id)sender;
 
 @end
 

@@ -74,21 +74,21 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dZ4-Le-U6j">
-                                <rect key="frame" x="134" y="349" width="107" height="30"/>
+                                <rect key="frame" x="134" y="374" width="107" height="30"/>
                                 <state key="normal" title="Server Connect"/>
                                 <connections>
                                     <action selector="connectButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FdK-LA-SHL"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m1y-1j-cMv">
-                                <rect key="frame" x="152" y="401" width="71" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m1y-1j-cMv">
+                                <rect key="frame" x="152" y="412" width="71" height="30"/>
                                 <state key="normal" title="Read Data"/>
                                 <connections>
                                     <action selector="readButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Zhx-b5-cPg"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BMi-o0-7L8">
-                                <rect key="frame" x="155" y="451" width="65" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BMi-o0-7L8">
+                                <rect key="frame" x="155" y="450" width="65" height="30"/>
                                 <state key="normal" title="Net Clear"/>
                                 <connections>
                                     <action selector="killButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Cqo-B0-yGq"/>
@@ -98,9 +98,17 @@
                                 <rect key="frame" x="67" y="510" width="240" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uvS-b4-evL">
+                                <rect key="frame" x="242" y="311" width="101" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Unbind Device"/>
+                                <connections>
+                                    <action selector="unbindButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YJ1-Co-KZj"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rZD-zL-jMM">
-                                <rect key="frame" x="127" y="305" width="121" height="30"/>
-                                <state key="normal" title="Capture QR Code"/>
+                                <rect key="frame" x="32" y="311" width="82" height="30"/>
+                                <state key="normal" title="Bind Device"/>
                                 <connections>
                                     <action selector="captureButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KdW-99-q3H"/>
                                 </connections>
@@ -108,16 +116,16 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="rZD-zL-jMM" firstAttribute="centerX" secondItem="anH-68-myp" secondAttribute="centerX" id="14P-6H-0hn"/>
+                            <constraint firstItem="rZD-zL-jMM" firstAttribute="centerX" secondItem="anH-68-myp" secondAttribute="centerX" constant="-114.5" id="14P-6H-0hn"/>
                             <constraint firstItem="Qt9-Kp-DXd" firstAttribute="top" secondItem="ICH-LN-aj3" secondAttribute="bottom" constant="2" id="B3z-t4-meO"/>
                             <constraint firstItem="krm-qM-O3l" firstAttribute="top" secondItem="R14-ME-uVA" secondAttribute="bottom" constant="10" id="BcH-SB-hHe"/>
-                            <constraint firstItem="7mE-2A-vrC" firstAttribute="top" secondItem="BMi-o0-7L8" secondAttribute="bottom" constant="29" id="Bs1-sA-x7j"/>
+                            <constraint firstItem="7mE-2A-vrC" firstAttribute="top" secondItem="BMi-o0-7L8" secondAttribute="bottom" constant="44" id="Bs1-sA-x7j"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="7mE-2A-vrC" secondAttribute="bottom" constant="29" id="CId-lz-6TD"/>
-                            <constraint firstItem="dZ4-Le-U6j" firstAttribute="top" secondItem="anH-68-myp" secondAttribute="bottom" constant="77" id="Cni-zo-lhy"/>
+                            <constraint firstItem="dZ4-Le-U6j" firstAttribute="top" secondItem="anH-68-myp" secondAttribute="bottom" constant="102" id="Cni-zo-lhy"/>
                             <constraint firstItem="M2K-Ex-yds" firstAttribute="top" secondItem="krm-qM-O3l" secondAttribute="bottom" constant="10" id="Ei2-zx-Nt6"/>
                             <constraint firstItem="R14-ME-uVA" firstAttribute="trailing" secondItem="krm-qM-O3l" secondAttribute="trailing" id="HXc-9f-Je8"/>
                             <constraint firstItem="ANq-OS-WMB" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="J4a-z2-tms"/>
-                            <constraint firstItem="m1y-1j-cMv" firstAttribute="top" secondItem="dZ4-Le-U6j" secondAttribute="bottom" constant="22" id="NrP-j8-q11"/>
+                            <constraint firstItem="m1y-1j-cMv" firstAttribute="top" secondItem="dZ4-Le-U6j" secondAttribute="bottom" constant="1" id="NrP-j8-q11"/>
                             <constraint firstItem="R14-ME-uVA" firstAttribute="top" secondItem="Qt9-Kp-DXd" secondAttribute="bottom" constant="25" id="RiZ-JZ-Eql"/>
                             <constraint firstItem="R14-ME-uVA" firstAttribute="leading" secondItem="ktI-wg-KUE" secondAttribute="leading" id="SMa-DK-FXM"/>
                             <constraint firstItem="ANq-OS-WMB" firstAttribute="leading" secondItem="Qt9-Kp-DXd" secondAttribute="leading" id="Uds-pq-l6b"/>
@@ -125,16 +133,16 @@
                             <constraint firstItem="ICH-LN-aj3" firstAttribute="top" secondItem="ANq-OS-WMB" secondAttribute="bottom" constant="8" symbolic="YES" id="Ysy-TX-fVe"/>
                             <constraint firstItem="anH-68-myp" firstAttribute="trailing" secondItem="M2K-Ex-yds" secondAttribute="trailing" id="aKx-c0-jDp"/>
                             <constraint firstItem="anH-68-myp" firstAttribute="top" secondItem="M2K-Ex-yds" secondAttribute="bottom" constant="24" id="aPz-rc-u90"/>
-                            <constraint firstItem="BMi-o0-7L8" firstAttribute="centerX" secondItem="m1y-1j-cMv" secondAttribute="centerX" id="agg-gP-hvd"/>
+                            <constraint firstItem="BMi-o0-7L8" firstAttribute="centerX" secondItem="m1y-1j-cMv" secondAttribute="centerX" constant="-3" id="agg-gP-hvd"/>
                             <constraint firstItem="7mE-2A-vrC" firstAttribute="centerX" secondItem="BMi-o0-7L8" secondAttribute="centerX" id="aoC-Zg-qs0"/>
                             <constraint firstItem="Qt9-Kp-DXd" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bgb-EA-qgt"/>
-                            <constraint firstItem="BMi-o0-7L8" firstAttribute="top" secondItem="m1y-1j-cMv" secondAttribute="bottom" constant="20" id="cXf-yM-NfV"/>
+                            <constraint firstItem="BMi-o0-7L8" firstAttribute="top" secondItem="m1y-1j-cMv" secondAttribute="bottom" constant="1" id="cXf-yM-NfV"/>
                             <constraint firstItem="Qt9-Kp-DXd" firstAttribute="trailing" secondItem="R14-ME-uVA" secondAttribute="trailing" id="dX2-WU-dF3"/>
                             <constraint firstItem="ICH-LN-aj3" firstAttribute="trailing" secondItem="ANq-OS-WMB" secondAttribute="trailing" id="hXE-cQ-qc2"/>
-                            <constraint firstItem="m1y-1j-cMv" firstAttribute="centerX" secondItem="dZ4-Le-U6j" secondAttribute="centerX" id="kJY-pq-gv7"/>
+                            <constraint firstItem="m1y-1j-cMv" firstAttribute="centerX" secondItem="dZ4-Le-U6j" secondAttribute="centerX" constant="3" id="kJY-pq-gv7"/>
                             <constraint firstItem="ICH-LN-aj3" firstAttribute="trailing" secondItem="Qt9-Kp-DXd" secondAttribute="trailing" id="m86-rc-Ypj"/>
                             <constraint firstItem="R14-ME-uVA" firstAttribute="leading" secondItem="Qt9-Kp-DXd" secondAttribute="leading" id="oQu-V8-EsU"/>
-                            <constraint firstItem="dZ4-Le-U6j" firstAttribute="top" secondItem="rZD-zL-jMM" secondAttribute="bottom" constant="14" id="oYc-T9-9mR"/>
+                            <constraint firstItem="dZ4-Le-U6j" firstAttribute="top" secondItem="rZD-zL-jMM" secondAttribute="bottom" constant="33" id="oYc-T9-9mR"/>
                             <constraint firstItem="7mE-2A-vrC" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="51" id="sE8-R0-WC5"/>
                             <constraint firstItem="ktI-wg-KUE" firstAttribute="leading" secondItem="M2K-Ex-yds" secondAttribute="leading" id="slp-pi-gTT"/>
                             <constraint firstItem="krm-qM-O3l" firstAttribute="trailing" secondItem="M2K-Ex-yds" secondAttribute="trailing" id="uV0-vT-nuI"/>
@@ -154,6 +162,7 @@
                         <outlet property="switcher" destination="krm-qM-O3l" id="qq0-nU-zLb"/>
                         <outlet property="txtPwd" destination="R14-ME-uVA" id="CNA-3F-AHN"/>
                         <outlet property="txtSSID" destination="Qt9-Kp-DXd" id="9JE-Wx-tQf"/>
+                        <outlet property="unbindButton" destination="uvS-b4-evL" id="60Y-UZ-E1X"/>
                         <outlet property="viewPreview" destination="7mE-2A-vrC" id="b4q-e1-5pN"/>
                     </connections>
                 </viewController>

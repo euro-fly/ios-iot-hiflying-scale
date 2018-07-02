@@ -34,9 +34,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
     _isReading = NO;
     _captureSession = nil;
-    _scaleMacAddress = nil;
+    _scaleMacAddress = [defaults stringForKey:@"macAddress"];
+    
+    if (_scaleMacAddress != nil) {
+        _myLabel.text = _scaleMacAddress;
+        _captureButton.enabled = false;
+        _unbindButton.enabled = true;
+        _butConnect.enabled = true;
+    }
+    else { // disable every other button if we are currently unbound...
+        _butConnect.enabled = false;
+        _readButton.enabled = false;
+        _unbindButton.enabled = false;
+    }
     // Do any additional setup after loading the view, typically from a nib.
     smtlk = [HFSmartLink shareInstence];
     smtlk.isConfigOneDevice = true;
@@ -87,18 +102,22 @@
         AVMetadataMachineReadableCodeObject *metadataObj = [metadataObjects objectAtIndex:0];
         if ([[metadataObj type] isEqualToString:AVMetadataObjectTypeQRCode]) {
             NSString *ssid = [[metadataObj stringValue] substringWithRange:NSMakeRange(6, 12)];
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             _scaleMacAddress = ssid;
+            [defaults setObject:ssid forKey:@"macAddress"];
+            [defaults synchronize];
             _myLabel.text = ssid;
             NSLog(@"%@", ssid); // we only want the twelve characters starting from index 6 bc that's our mac address
             [self performSelectorOnMainThread:@selector(stopReading) withObject:nil waitUntilDone:NO];
             [_captureButton
-             performSelectorOnMainThread:@selector(setTitle:) withObject:@"Capture QR Code" waitUntilDone:NO];
+             performSelectorOnMainThread:@selector(setTitle:) withObject:@"Bind Device" waitUntilDone:NO];
             _isReading = NO;
+            _butConnect.enabled = true;
+            _unbindButton.enabled = true;
+            _captureButton.enabled = false;
         }
     }
 }
-
-
 
 - (IBAction)connectButtonPressed:(id)sender {
     if (_scaleMacAddress != nil) {
@@ -122,7 +141,7 @@
 - (IBAction)captureButtonPressed:(id)sender {
     if (!_isReading) {
         if ([self startReading]) {
-            [_captureButton setTitle:@"Capture QR Code" forState:UIControlStateNormal];
+            [_captureButton setTitle:@"Bind Device" forState:UIControlStateNormal];
         }
     }
     else {
@@ -131,7 +150,21 @@
     _isReading = !_isReading;
 }
 
+- (IBAction)unbindButtonPressed:(id)sender {
+    _scaleMacAddress = nil;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:nil forKey:@"macAddress"];
+    [defaults synchronize];
+    _myLabel.text = @"NO MAC SAVED YET";
+    _captureButton.enabled = true;
+    _butConnect.enabled = false;
+    _readButton.enabled = false;
+    _unbindButton.enabled = false;
+    
+}
+
 - (IBAction)butPressed:(id)sender {
+    [TCPHelper KillData:_scaleMacAddress]; // fire netclear (0x14) before connecting...
     NSString * ssidStr= self.txtSSID.text;
     NSString * pswdStr = self.txtPwd.text;
     
@@ -146,6 +179,7 @@
                     self.progress.progress = (float)(pro)/100.0;
                 } successBlock:^(HFSmartLinkDeviceInfo *dev) {
                     [self  showAlertWithMsg:[NSString stringWithFormat:@"%@:%@",dev.mac,dev.ip] title:@"OK"];
+                    _readButton.enabled = true;
                 } failBlock:^(NSString *failmsg) {
                     [self  showAlertWithMsg:failmsg title:@"error"];
                 } endBlock:^(NSDictionary *deviceDic) {
@@ -159,6 +193,7 @@
                 isconnecting  = false;
                 [self.butConnect setTitle:@"1connect" forState:UIControlStateNormal];
                 [self showAlertWithMsg:stopMsg title:@"OK"];
+                _readButton.enabled = true;
             }else{
                 [self showAlertWithMsg:stopMsg title:@"error"];
             }
