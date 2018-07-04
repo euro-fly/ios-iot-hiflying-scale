@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "BindScreenViewController.h"
-
+#import "Demo-Swift.h"
 @implementation BindScreenViewController
 
 - (void)viewDidLoad {
@@ -29,11 +29,12 @@
 }
 
 - (void) qrCodeFound:(NSNotification *) notification {
-    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [TCPHelper ConnectToDevice:[defaults stringForKey:@"macAddress"]];
 }
 
 - (IBAction)bindButtonPressed:(id)sender {
-    [self performSegueWithIdentifier:@"SegueIdentifier" sender:self];
+    [self performSegueWithIdentifier:@"ShowCamera" sender:self];
 }
 
 @end

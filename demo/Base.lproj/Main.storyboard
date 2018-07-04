@@ -305,6 +305,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FO3-5W-0t3">
                                 <rect key="frame" x="27" y="28" width="61" height="30"/>
                                 <state key="normal" title="&lt; Cancel"/>
+                                <connections>
+                                    <action selector="cancelButtonPressed:" destination="LhS-cp-hfv" eventType="touchUpInside" id="4u9-Ga-IoU"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lvA-Bt-Hfa">
                                 <rect key="frame" x="27" y="66" width="321" height="443"/>
@@ -321,6 +324,10 @@
                             <constraint firstItem="FO3-5W-0t3" firstAttribute="top" secondItem="8rm-Hl-02X" secondAttribute="bottom" constant="8" symbolic="YES" id="y96-2U-nOh"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="cancelButton" destination="FO3-5W-0t3" id="do6-6P-8vy"/>
+                        <outlet property="viewPreview" destination="lvA-Bt-Hfa" id="6UJ-m3-FKs"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f3X-Ba-pah" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

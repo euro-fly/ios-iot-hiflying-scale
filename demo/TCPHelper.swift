@@ -13,6 +13,7 @@ extension Character {
     }
 }
 
+// SEND OUT NOTIFICATIONS PER FAILURE EVENT...
 @objc class TCPHelper: NSObject {
 
     //var client: TCPClient?
