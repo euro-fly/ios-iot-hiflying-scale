@@ -14,6 +14,7 @@ extension Character {
 }
 
 // SEND OUT NOTIFICATIONS PER FAILURE EVENT...
+// the notifications will only send a boolean as the object... true if the attempt succeeded, false if not
 @objc class TCPHelper: NSObject {
 
     //var client: TCPClient?
@@ -29,7 +30,7 @@ extension Character {
         return byteArray
     }
     
-    @objc static func ConnectToDevice(_ mac: String) {
+    @objc static func ConnectToDevice(_ mac: String) { //0x12 - register device
         let client = TCPClient(address: "api.swiftechie.com", port: Int32(7799))
         switch client.connect(timeout: 10) {
         case .success:
@@ -37,14 +38,21 @@ extension Character {
             if let response = TCPHelper.sendRequest(using: client, mac: mac) {
                 print("Response:")
                 print(response)
+                if (response[1] == 0x02) {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "0x12"), object: false)
+                }
+                else {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "0x12"), object: true)
+                }
             }
         case .failure(let error):
             print(String(describing: error))
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "0x12"), object: false)
         }
         client.close()
     }
     
-    @objc static func ReadData(_ mac: String) {
+    @objc static func ReadData(_ mac: String) { //0x11 - request data
         let client = TCPClient(address: "api.swiftechie.com", port: Int32(7799))
         switch client.connect(timeout: 10) {
         case .success:
@@ -59,7 +67,7 @@ extension Character {
         client.close()
     }
     
-    @objc static func KillData(_ mac: String) {
+    @objc static func KillData(_ mac: String) { //0x14 - net clear
         let client = TCPClient(address: "api.swiftechie.com", port: Int32(7799))
         switch client.connect(timeout: 10) {
         case .success:
@@ -102,7 +110,7 @@ extension Character {
         var cmd:[Byte] = [0x12] + TCPHelper.asciiToHex(ascii: mac, len: 12) + // command id
             [0x01] + // type: 0x01:register   0x02:unregister
             TCPHelper.asciiToHex(ascii: "152894137336597697", len: 20) + // userid
-                [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00] // org
+            [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00] // org
         switch client.send(data: cmd) {
         case .success:
             print("Got a response...")
@@ -153,7 +161,7 @@ extension Character {
     //ASSUMING we only get the last weight data...
     // REWRITE THIS to return an array of an array of strings...
     static private func parseWeightData(data: Array<Byte>) -> Array<Byte>? {
-    
+        
         //var byteCount : Array<Byte> = [0x00, 0x00, 0x00, data[1]]
         //var number = byteArrayToInt(bytes: byteCount)   -- we can skip using the second byte as a counter, because... we know that the data will always be sent over in groups of 11.
         let instance = HTPeopleGeneral()
