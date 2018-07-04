@@ -291,9 +291,9 @@
 				TargetAttributes = {
 					D0018AA01C0693F100DCE703 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = TV9KFY46P5;
+						DevelopmentTeam = BCNX88HE55;
 						LastSwiftMigration = 0940;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					D0018AB91C0693F100DCE703 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -579,8 +579,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = TV9KFY46P5;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = BCNX88HE55;
 				INFOPLIST_FILE = Demo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -589,10 +589,10 @@
 					"$(PROJECT_DIR)",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "High-Flying.Demo";
+				PRODUCT_BUNDLE_IDENTIFIER = life.joule.appstore.joule;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "21b48fc2-31d7-4742-bbe1-c8507bee5379";
+				PROVISIONING_PROFILE_SPECIFIER = Joule.Development_1004;
 				SWIFT_OBJC_BRIDGING_HEADER = "Demo/Demo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -607,8 +607,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = TV9KFY46P5;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = BCNX88HE55;
 				INFOPLIST_FILE = Demo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -616,10 +616,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "High-Flying.Demo";
+				PRODUCT_BUNDLE_IDENTIFIER = life.joule.appstore.joule;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "21b48fc2-31d7-4742-bbe1-c8507bee5379";
+				PROVISIONING_PROFILE_SPECIFIER = Joule.Development_1004;
 				SWIFT_OBJC_BRIDGING_HEADER = "Demo/Demo-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};

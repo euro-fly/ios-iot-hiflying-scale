@@ -168,22 +168,32 @@ extension Character {
             print("DATA:")
             print(date)
             print(weight)
+            var myFat : String
             switch(fat) {
             case HTBodyfatErrorType.none:
                 print(instance.htBodyfatPercentage)
+                myFat = instance.htBodyfatPercentage.description
                 break
             case HTBodyfatErrorType.age:
                 print("Error occurred due to age being outside 6..99 range")
+                myFat = "NaN"
                 break
             case HTBodyfatErrorType.impedance:
                 print("Error occurred due to invalid impedance data.")
+                myFat = "NaN"
                 break
             case HTBodyfatErrorType.weight:
                 print("Error occurred due to weight being outside 50..200kg range")
+                myFat = "NaN"
                 break
             default:
                 print("An unexpected error occurred.")
+                myFat = "NaN"
             }
+            let msg = String(format: "体重：%@　体脂肪率：%@", weight.description, myFat)
+            let alert = UIAlertController(title: String(describing: date), message: msg, preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler:nil))
+            UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
             x+=11
         }
         return data

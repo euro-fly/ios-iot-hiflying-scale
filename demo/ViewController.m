@@ -115,16 +115,11 @@
             _butConnect.enabled = true;
             _unbindButton.enabled = true;
             _captureButton.enabled = false;
+            [TCPHelper ConnectToDevice:_scaleMacAddress];
         }
     }
 }
 
-- (IBAction)connectButtonPressed:(id)sender {
-    if (_scaleMacAddress != nil) {
-        [TCPHelper ConnectToDevice:_scaleMacAddress];
-    }
-    
-}
 
 - (IBAction)readButtonPressed:(id)sender {
     if (_scaleMacAddress != nil) {
@@ -132,11 +127,6 @@
     }
 }
 
-- (IBAction)killButtonPressed:(id)sender {
-    if (_scaleMacAddress != nil) {
-        [TCPHelper KillData:_scaleMacAddress];
-    }
-}
 
 - (IBAction)captureButtonPressed:(id)sender {
     if (!_isReading) {
