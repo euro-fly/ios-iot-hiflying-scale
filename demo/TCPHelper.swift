@@ -39,15 +39,15 @@ extension Character {
                 print("Response:")
                 print(response)
                 if (response[1] == 0x02) {
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "0x12"), object: false)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "0x12"), object: NSNumber.init(value: false))
                 }
                 else {
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "0x12"), object: true)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "0x12"), object: NSNumber.init(value: true))
                 }
             }
         case .failure(let error):
             print(String(describing: error))
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "0x12"), object: false)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "0x12"), object: NSNumber.init(value: false))
         }
         client.close()
     }

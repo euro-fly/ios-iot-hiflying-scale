@@ -63,7 +63,9 @@
     if (metadataObjects != nil && [metadataObjects count] > 0) {
         AVMetadataMachineReadableCodeObject *metadataObj = [metadataObjects objectAtIndex:0];
         if ([[metadataObj type] isEqualToString:AVMetadataObjectTypeQRCode]) {
-            NSString *ssid = [[metadataObj stringValue] substringWithRange:NSMakeRange(6, 12)];
+            NSString *qrValue = [metadataObj stringValue];
+            NSLog(@"[length] %d", [qrValue length]);
+            NSString *ssid = [qrValue substringWithRange:NSMakeRange(6, 12)];
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults setObject:ssid forKey:@"macAddress"];
             [defaults synchronize];
@@ -74,6 +76,7 @@
             [[NSNotificationCenter defaultCenter]
              postNotificationName:@"macAddress"
              object:nil];
+            
         }
     }
 }

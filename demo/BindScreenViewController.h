@@ -11,4 +11,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *bindButton;
 - (IBAction)bindButtonPressed:(id)sender;
 - (void) qrCodeFound:(NSNotification *) notification;
+- (void) serverConnectEvent:(NSNotification *) notification;
+- (void) loadMainMenu;
+
 @end
