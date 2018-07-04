@@ -13,6 +13,10 @@
 		168C03CE20DBA5E400387478 /* Pods_DemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 168C03CD20DBA5E400387478 /* Pods_DemoUITests.framework */; };
 		16B60B6720E3861700EF0062 /* QRReaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B60B6520E3861600EF0062 /* QRReaderViewController.m */; };
 		16C2FF5820DB9EFA008A4F47 /* TCPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C2FF5720DB9EFA008A4F47 /* TCPHelper.swift */; };
+		16CF13C820EC9E6E001D1F43 /* BindScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16CF13C720EC9E6E001D1F43 /* BindScreenViewController.m */; };
+		16CF13CB20EC9F2D001D1F43 /* QRCaptureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16CF13CA20EC9F2D001D1F43 /* QRCaptureViewController.m */; };
+		16CF13CE20EC9F9F001D1F43 /* FeatureNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16CF13CD20EC9F9F001D1F43 /* FeatureNavigationViewController.m */; };
+		16CF13D120ECA06B001D1F43 /* DataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16CF13D020ECA06B001D1F43 /* DataViewController.m */; };
 		1B22D47CFA0BF7F64551B402 /* Pods_DemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC007C2096657DE2C134F81D /* Pods_DemoTests.framework */; };
 		C75A7273FE014756E1AEA023 /* Pods_DemoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2E9F7AA9C45FA93A3415D83 /* Pods_DemoUITests.framework */; };
 		D0018AA61C0693F100DCE703 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D0018AA51C0693F100DCE703 /* main.m */; };
@@ -57,6 +61,14 @@
 		16B60B6620E3861600EF0062 /* QRReaderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QRReaderViewController.h; path = demo/QRReaderViewController.h; sourceTree = SOURCE_ROOT; };
 		16C2FF5620DB9EF9008A4F47 /* Demo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Demo-Bridging-Header.h"; sourceTree = "<group>"; };
 		16C2FF5720DB9EFA008A4F47 /* TCPHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TCPHelper.swift; path = demo/TCPHelper.swift; sourceTree = SOURCE_ROOT; };
+		16CF13C620EC9E5F001D1F43 /* BindScreenViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BindScreenViewController.h; path = demo/BindScreenViewController.h; sourceTree = SOURCE_ROOT; };
+		16CF13C720EC9E6E001D1F43 /* BindScreenViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BindScreenViewController.m; sourceTree = "<group>"; };
+		16CF13C920EC9F0B001D1F43 /* QRCaptureViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QRCaptureViewController.h; sourceTree = "<group>"; };
+		16CF13CA20EC9F2D001D1F43 /* QRCaptureViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QRCaptureViewController.m; sourceTree = "<group>"; };
+		16CF13CC20EC9F94001D1F43 /* FeatureNavigationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeatureNavigationViewController.h; sourceTree = "<group>"; };
+		16CF13CD20EC9F9F001D1F43 /* FeatureNavigationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeatureNavigationViewController.m; sourceTree = "<group>"; };
+		16CF13CF20ECA05A001D1F43 /* DataViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataViewController.h; sourceTree = "<group>"; };
+		16CF13D020ECA06B001D1F43 /* DataViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DataViewController.m; sourceTree = "<group>"; };
 		568D779F47B3EBE437EEE2C3 /* Pods-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		6D758A8802BEED53AF345690 /* Pods-DemoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DemoUITests/Pods-DemoUITests.release.xcconfig"; sourceTree = "<group>"; };
 		72C34AF8C6F832161B1211FA /* Pods-DemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DemoUITests/Pods-DemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -182,7 +194,15 @@
 				D0018AAA1C0693F100DCE703 /* ViewController.h */,
 				D0018AAB1C0693F100DCE703 /* ViewController.m */,
 				16C2FF5720DB9EFA008A4F47 /* TCPHelper.swift */,
+				16CF13C620EC9E5F001D1F43 /* BindScreenViewController.h */,
+				16CF13C720EC9E6E001D1F43 /* BindScreenViewController.m */,
+				16CF13C920EC9F0B001D1F43 /* QRCaptureViewController.h */,
+				16CF13CA20EC9F2D001D1F43 /* QRCaptureViewController.m */,
 				D0018AAD1C0693F100DCE703 /* Main.storyboard */,
+				16CF13CF20ECA05A001D1F43 /* DataViewController.h */,
+				16CF13D020ECA06B001D1F43 /* DataViewController.m */,
+				16CF13CC20EC9F94001D1F43 /* FeatureNavigationViewController.h */,
+				16CF13CD20EC9F9F001D1F43 /* FeatureNavigationViewController.m */,
 				16B60B6620E3861600EF0062 /* QRReaderViewController.h */,
 				16B60B6520E3861600EF0062 /* QRReaderViewController.m */,
 				D0018AB01C0693F100DCE703 /* Assets.xcassets */,
@@ -432,9 +452,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16CF13C820EC9E6E001D1F43 /* BindScreenViewController.m in Sources */,
 				D0018AAC1C0693F100DCE703 /* ViewController.m in Sources */,
 				16B60B6720E3861700EF0062 /* QRReaderViewController.m in Sources */,
+				16CF13CB20EC9F2D001D1F43 /* QRCaptureViewController.m in Sources */,
+				16CF13D120ECA06B001D1F43 /* DataViewController.m in Sources */,
 				16C2FF5820DB9EFA008A4F47 /* TCPHelper.swift in Sources */,
+				16CF13CE20EC9F9F001D1F43 /* FeatureNavigationViewController.m in Sources */,
 				D0018AA91C0693F100DCE703 /* AppDelegate.m in Sources */,
 				D0018AA61C0693F100DCE703 /* main.m in Sources */,
 			);
