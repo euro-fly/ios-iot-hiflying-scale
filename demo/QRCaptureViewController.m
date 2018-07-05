@@ -64,18 +64,26 @@
         AVMetadataMachineReadableCodeObject *metadataObj = [metadataObjects objectAtIndex:0];
         if ([[metadataObj type] isEqualToString:AVMetadataObjectTypeQRCode]) {
             NSString *qrValue = [metadataObj stringValue];
-            NSLog(@"[length] %d", [qrValue length]);
-            NSString *ssid = [qrValue substringWithRange:NSMakeRange(6, 12)];
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults setObject:ssid forKey:@"macAddress"];
-            [defaults synchronize];
-            //_myLabel.text = ssid;
-            NSLog(@"%@", ssid); // we only want the twelve characters starting from index 6 bc that's our mac address
+            BOOL validData;
+            NSLog(@"[length] %lu", (unsigned long)[qrValue length]);
+            if ([qrValue length] < 31 || ![[qrValue substringWithRange:NSMakeRange(0, 6)] isEqualToString:@"S1MAC:"]) {
+                validData = NO;
+            }
+            else {
+                NSString *ssid = [qrValue substringWithRange:NSMakeRange(6, 12)];
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                [defaults setObject:ssid forKey:@"macAddress"];
+                [defaults synchronize];
+                //_myLabel.text = ssid;
+                NSLog(@"%@", ssid); // we only want the twelve characters starting from index 6 bc that's our mac address
+                validData = YES;
+            }
+            
             [self performSelectorOnMainThread:@selector(stopReading) withObject:nil waitUntilDone:NO];
             _isReading = NO;
             [[NSNotificationCenter defaultCenter]
              postNotificationName:@"macAddress"
-             object:nil];
+             object:[[NSNumber alloc] initWithBool:validData]];
             
         }
     }

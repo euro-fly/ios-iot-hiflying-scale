@@ -20,6 +20,8 @@
 - (IBAction)unbindButtonPressed:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [TCPHelper KillData:[defaults stringForKey:@"macAddress"]];
+    [defaults removeObjectForKey:@"macAddress"];
+    [defaults removeObjectForKey:@"didSetup"];
     UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"init"];
     [self presentViewController:vc animated:YES completion:nil];
 }

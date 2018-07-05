@@ -39,10 +39,16 @@
 }
 
 - (void) qrCodeFound:(NSNotification *) notification {
+    NSNumber *result = [notification object];
     [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
-        NSLog(@"[LOG] QR Code Found!!");
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [TCPHelper ConnectToDevice:[defaults stringForKey:@"macAddress"]];
+        if (result.boolValue) {
+            NSLog(@"[LOG] QR Code Found!!");
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [TCPHelper ConnectToDevice:[defaults stringForKey:@"macAddress"]];
+        }
+        else {
+            NSLog(@"[LOG] Malformed QR Code...");
+        }
     }];
     
     
