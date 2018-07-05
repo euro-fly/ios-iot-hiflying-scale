@@ -58,6 +58,7 @@
     [_captureSession startRunning];
     return YES;
 }
+
 -(void)stopReading{
     [_captureSession stopRunning];
     _captureSession = nil;
@@ -79,8 +80,6 @@
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                 [defaults setObject:ssid forKey:@"macAddress"];
                 [defaults synchronize];
-                //_myLabel.text = ssid;
-                NSLog(@"%@", ssid); // we only want the twelve characters starting from index 6 bc that's our mac address
                 validData = YES;
             }
             

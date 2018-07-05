@@ -68,6 +68,7 @@ extension Character {
     }
     
     @objc static func KillData(_ mac: String) { //0x14 - net clear
+        print("[LOG] NetClear function called...");
         let client = TCPClient(address: "api.swiftechie.com", port: Int32(7799))
         switch client.connect(timeout: 10) {
         case .success:
@@ -206,6 +207,7 @@ extension Character {
             }
             dataSet.append(myFat)
             myData.append(dataSet)
+            
             x+=11
         }
         UserDefaults.standard.set(myData, forKey: "dataSet")
