@@ -166,7 +166,9 @@ extension Character {
         //var number = byteArrayToInt(bytes: byteCount)   -- we can skip using the second byte as a counter, because... we know that the data will always be sent over in groups of 11.
         let instance = HTPeopleGeneral()
         var x = 2
+        var myData : Array<Array<String>> = []
         while x < data.count {
+            var dataSet : Array<String> = []
             let dateBytes : Array<Byte> = [data[x], data[x+1],data[x+2],data[x+3]]
             let impedanceBytes : Array<Byte> = [data[x+4], data[x+5],data[x+6],data[x+7]]
             let weightBytes : Array<Byte> = [0x00,0x00,data[x+8],data[x+9]]
@@ -176,6 +178,8 @@ extension Character {
             let weight = CGFloat(byteArrayToInt(bytes: weightBytes)) / 10
             let fat = instance.getBodyfatWithweightKg(weight, heightCm: 168, sex: HTSexType.male, age: 30, impedance: Int(impedance))
             print("DATA:")
+            dataSet.append(String(describing: date))
+            dataSet.append(weight.description)
             print(date)
             print(weight)
             var myFat : String
@@ -200,12 +204,11 @@ extension Character {
                 print("An unexpected error occurred.")
                 myFat = "NaN"
             }
-            let msg = String(format: "体重：%@　体脂肪率：%@", weight.description, myFat)
-            let alert = UIAlertController(title: String(describing: date), message: msg, preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler:nil))
-            UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
+            dataSet.append(myFat)
+            myData.append(dataSet)
             x+=11
         }
+        UserDefaults.standard.set(myData, forKey: "dataSet")
         return data
     }
     

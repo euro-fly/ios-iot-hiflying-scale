@@ -22,11 +22,6 @@
     
 }
 @property (nonatomic) NSString* scaleMacAddress;
-@property (nonatomic) BOOL isReading;
--(BOOL)startReading;
--(void)stopReading;
-@property (nonatomic, strong) AVCaptureSession *captureSession;
-@property (nonatomic, strong) AVCaptureVideoPreviewLayer *videoPreviewLayer;
 @end
 
 @implementation ViewController
@@ -36,22 +31,9 @@
     [super viewDidLoad];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    _isReading = NO;
-    _captureSession = nil;
     _scaleMacAddress = [defaults stringForKey:@"macAddress"];
+    _myLabel.text = _scaleMacAddress;
     
-    if (_scaleMacAddress != nil) {
-        _myLabel.text = _scaleMacAddress;
-        _captureButton.enabled = false;
-        _unbindButton.enabled = true;
-        _butConnect.enabled = true;
-    }
-    else { // disable every other button if we are currently unbound...
-        _butConnect.enabled = false;
-        _readButton.enabled = false;
-        _unbindButton.enabled = false;
-    }
     // Do any additional setup after loading the view, typically from a nib.
     smtlk = [HFSmartLink shareInstence];
     smtlk.isConfigOneDevice = true;
@@ -65,92 +47,6 @@
     self.txtPwd.text = [self getspwdByssid:self.txtSSID.text];
     _txtPwd.delegate=self;
     _txtSSID.delegate=self;
-}
-
-- (BOOL)startReading {
-    NSError *error;
-    AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice error:&error];
-    if (!input) {
-        NSLog(@"%@", [error localizedDescription]);
-        return NO;
-    }
-    _captureSession = [[AVCaptureSession alloc] init];
-    [_captureSession addInput:input];
-    AVCaptureMetadataOutput *captureMetadataOutput = [[AVCaptureMetadataOutput alloc] init];
-    [_captureSession addOutput:captureMetadataOutput];
-    dispatch_queue_t dispatchQueue;
-    dispatchQueue = dispatch_queue_create("myQueue", NULL);
-    [captureMetadataOutput setMetadataObjectsDelegate:self queue:dispatchQueue];
-    [captureMetadataOutput setMetadataObjectTypes:[NSArray arrayWithObject:AVMetadataObjectTypeQRCode]];
-    _videoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:_captureSession];
-    [_videoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
-    [_videoPreviewLayer setFrame:_viewPreview.layer.bounds];
-    [_viewPreview.layer addSublayer:_videoPreviewLayer];
-    [_captureSession startRunning];
-    return YES;
-}
-
--(void)stopReading{
-    [_captureSession stopRunning];
-    _captureSession = nil;
-    [_videoPreviewLayer removeFromSuperlayer];
-}
-
--(void)captureOutput:(AVCaptureOutput *)output didOutputMetadataObjects:(NSArray<__kindof AVMetadataObject *> *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
-    if (metadataObjects != nil && [metadataObjects count] > 0) {
-        AVMetadataMachineReadableCodeObject *metadataObj = [metadataObjects objectAtIndex:0];
-        if ([[metadataObj type] isEqualToString:AVMetadataObjectTypeQRCode]) {
-            NSString *ssid = [[metadataObj stringValue] substringWithRange:NSMakeRange(6, 12)];
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            _scaleMacAddress = ssid;
-            [defaults setObject:ssid forKey:@"macAddress"];
-            [defaults synchronize];
-            _myLabel.text = ssid;
-            NSLog(@"%@", ssid); // we only want the twelve characters starting from index 6 bc that's our mac address
-            [self performSelectorOnMainThread:@selector(stopReading) withObject:nil waitUntilDone:NO];
-            [_captureButton
-             performSelectorOnMainThread:@selector(setTitle:) withObject:@"Bind Device" waitUntilDone:NO];
-            _isReading = NO;
-            _butConnect.enabled = true;
-            _unbindButton.enabled = true;
-            _captureButton.enabled = false;
-            [TCPHelper ConnectToDevice:_scaleMacAddress];
-        }
-    }
-}
-
-
-- (IBAction)readButtonPressed:(id)sender {
-    if (_scaleMacAddress != nil) {
-        [TCPHelper ReadData:_scaleMacAddress];
-    }
-}
-
-
-- (IBAction)captureButtonPressed:(id)sender {
-    if (!_isReading) {
-        if ([self startReading]) {
-            [_captureButton setTitle:@"Bind Device" forState:UIControlStateNormal];
-        }
-    }
-    else {
-        [self stopReading];
-    }
-    _isReading = !_isReading;
-}
-
-- (IBAction)unbindButtonPressed:(id)sender {
-    _scaleMacAddress = nil;
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:nil forKey:@"macAddress"];
-    [defaults synchronize];
-    _myLabel.text = @"NO MAC SAVED YET";
-    _captureButton.enabled = true;
-    _butConnect.enabled = false;
-    _readButton.enabled = false;
-    _unbindButton.enabled = false;
-    
 }
 
 - (IBAction)butPressed:(id)sender {
@@ -169,7 +65,7 @@
                     self.progress.progress = (float)(pro)/100.0;
                 } successBlock:^(HFSmartLinkDeviceInfo *dev) {
                     [self  showAlertWithMsg:[NSString stringWithFormat:@"%@:%@",dev.mac,dev.ip] title:@"OK"];
-                    _readButton.enabled = true;
+                    [self doTransition];
                 } failBlock:^(NSString *failmsg) {
                     [self  showAlertWithMsg:failmsg title:@"error"];
                 } endBlock:^(NSDictionary *deviceDic) {
@@ -180,14 +76,24 @@
     }else{
         [smtlk stopWithBlock:^(NSString *stopMsg, BOOL isOk) {
             if(isOk){
+                
                 isconnecting  = false;
                 [self.butConnect setTitle:@"1connect" forState:UIControlStateNormal];
                 [self showAlertWithMsg:stopMsg title:@"OK"];
-                _readButton.enabled = true;
+                [self doTransition];
             }else{
                 [self showAlertWithMsg:stopMsg title:@"error"];
             }
         }];
+    }
+}
+
+-(void)doTransition {
+    if (self.navigationController == nil) {
+        [self performSegueWithIdentifier:@"GoToMainMenuFromWifiConfig" sender:self];
+    }
+    else {
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 

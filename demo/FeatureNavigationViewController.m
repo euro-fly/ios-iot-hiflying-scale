@@ -8,7 +8,20 @@
 
 #import <Foundation/Foundation.h>
 #import "FeatureNavigationViewController.h"
+#import "Demo-Swift.h"
 
 @implementation FeatureNavigationViewController
+- (IBAction)wifiConfigButtonPressed:(id)sender {
+    [self performSegueWithIdentifier:@"NavigateToWifiConfig" sender:self];
+}
+- (IBAction)readDataButtonPressed:(id)sender {
+    [self performSegueWithIdentifier:@"NavigateToReadData" sender:self];
+}
+- (IBAction)unbindButtonPressed:(id)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [TCPHelper KillData:[defaults stringForKey:@"macAddress"]];
+    UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"init"];
+    [self presentViewController:vc animated:YES completion:nil];
+}
 @end
 

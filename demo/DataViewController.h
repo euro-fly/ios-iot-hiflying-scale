@@ -6,5 +6,7 @@
 //  Copyright © 2018 Peter. All rights reserved.
 //
 #import <UIKit/UIKit.h>
-@interface DataViewController : UIViewController
+@interface DataViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@property (weak, nonatomic) NSMutableArray *data;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end

@@ -19,7 +19,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults stringForKey:@"macAddress"] == nil) {
+    if ([defaults stringForKey:@"macAddress"] == nil || [defaults stringForKey:@"didSetup"] == nil) {
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(qrCodeFound:)
                                                      name:@"macAddress"
@@ -29,8 +29,7 @@
                                                      name:@"0x12"
                                                    object:nil];
     }
-    else { // if we are already bound... we can just load into the navigation controller.
-        NSLog(@"[LOG] Already have a mac address.");
+    else if ([defaults stringForKey:@"didSetup"] != nil) { // if we are already bound... we can just load into the navigation controller.
         [self performSegueWithIdentifier:@"GoMainMenu" sender:self];
     }
 }
@@ -40,10 +39,13 @@
 }
 
 - (void) qrCodeFound:(NSNotification *) notification {
-    [self.modalViewController dismissViewControllerAnimated:YES completion:nil];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [TCPHelper ConnectToDevice:[defaults stringForKey:@"macAddress"]];
-    NSLog(@"[LOG] QR Code Found!!");
+    [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
+        NSLog(@"[LOG] QR Code Found!!");
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [TCPHelper ConnectToDevice:[defaults stringForKey:@"macAddress"]];
+    }];
+    
+    
 }
 
 - (void) serverConnectEvent:(NSNotification *) notification {
@@ -52,7 +54,7 @@
         [self performSegueWithIdentifier:@"ShowSuccessScreen" sender:self];
     }
     else {
-        
+        NSLog(@"We couldn't connect to the network. Try again...");
     }
 }
 

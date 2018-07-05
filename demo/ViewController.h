@@ -8,24 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
-@interface ViewController : UIViewController<UITextFieldDelegate, AVCaptureMetadataOutputObjectsDelegate>
+@interface ViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UITextField *txtSSID;
 @property (weak, nonatomic) IBOutlet UITextField *txtPwd;
 @property (weak, nonatomic) IBOutlet UIButton *butConnect;
 @property (weak, nonatomic) IBOutlet UIProgressView *progress;
 @property (weak, nonatomic) IBOutlet UISwitch *switcher;
-@property (weak, nonatomic) IBOutlet UIButton *readButton;
-@property (weak, nonatomic) IBOutlet UIView *viewPreview;
-@property (weak, nonatomic) IBOutlet UIButton *captureButton;
 @property (weak, nonatomic) IBOutlet UILabel *myLabel;
-@property (weak, nonatomic) IBOutlet UIButton *unbindButton;
 
 - (IBAction)butPressed:(id)sender;
 - (IBAction)swPressed:(id)sender;
-- (IBAction)readButtonPressed:(id)sender;
-- (IBAction)captureButtonPressed:(id)sender;
-- (IBAction)unbindButtonPressed:(id)sender;
 
 @end
 
