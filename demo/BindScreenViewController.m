@@ -47,7 +47,7 @@
             [TCPHelper ConnectToDevice:[defaults stringForKey:@"macAddress"]];
         }
         else {
-            NSLog(@"[LOG] Malformed QR Code...");
+            NSLog(@"[LOG] Failed to get QR code");
         }
     }];
     

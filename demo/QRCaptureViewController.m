@@ -21,6 +21,11 @@
 @implementation QRCaptureViewController
 
 - (IBAction)cancelButtonPressed:(id)sender {
+    [self performSelectorOnMainThread:@selector(stopReading) withObject:nil waitUntilDone:NO];
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:@"macAddress"
+     object:[[NSNumber alloc] initWithBool:NO]];
+    
 }
 
 - (void)viewDidLoad {
