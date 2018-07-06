@@ -8,8 +8,11 @@
 #import <UIKit/UIKit.h>
 @interface FeatureNavigationViewController : UIViewController
 //NavigateToWifiConfig
+@property (weak, nonatomic) IBOutlet UILabel *userID;
 @property (weak, nonatomic) IBOutlet UIButton *wifiConfigButton;
 - (IBAction)wifiConfigButtonPressed:(id)sender;
+@property (weak, nonatomic) IBOutlet UISwitch *secretModeSwitch;
+- (IBAction)secretModeSwitchPressed:(id)sender;
 
 //NavigateToReadData
 @property (weak, nonatomic) IBOutlet UIButton *readDataButton;

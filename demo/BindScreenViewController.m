@@ -19,6 +19,12 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults stringForKey:@"userID"] == nil) {
+        NSString *uuid = [[NSUUID UUID] UUIDString];
+        [defaults setObject:uuid forKey:@"userID"];
+        [defaults synchronize];
+    }
+    NSLog(@"USER ID: %@", [defaults objectForKey:@"userID"]);
     if ([defaults stringForKey:@"macAddress"] == nil || [defaults stringForKey:@"didSetup"] == nil) {
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(qrCodeFound:)
@@ -44,7 +50,7 @@
         if (result.boolValue) {
             NSLog(@"[LOG] QR Code Found!!");
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [TCPHelper ConnectToDevice:[defaults stringForKey:@"macAddress"]];
+            [TCPHelper ConnectToDevice:[defaults stringForKey:@"macAddress"] state:YES];
         }
         else {
             NSLog(@"[LOG] Failed to get QR code");

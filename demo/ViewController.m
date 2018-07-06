@@ -36,12 +36,12 @@
     
     // Do any additional setup after loading the view, typically from a nib.
     smtlk = [HFSmartLink shareInstence];
-    smtlk.isConfigOneDevice = true;
+    smtlk.isConfigOneDevice = false;
     smtlk.waitTimers = 30;
     isconnecting=false;
     
     self.progress.progress = 0.0;
-    self.switcher.on = smtlk.isConfigOneDevice;
+    self.switcher.on = true;
     
     [self showWifiSsid];
     self.txtPwd.text = [self getspwdByssid:self.txtSSID.text];
@@ -76,7 +76,6 @@
     }else{
         [smtlk stopWithBlock:^(NSString *stopMsg, BOOL isOk) {
             if(isOk){
-                
                 isconnecting  = false;
                 [self.butConnect setTitle:@"1connect" forState:UIControlStateNormal];
                 [self showAlertWithMsg:stopMsg title:@"OK"];
@@ -98,11 +97,7 @@
 }
 
 - (IBAction)swPressed:(id)sender {
-    if(self.switcher.on){
-        smtlk.isConfigOneDevice = true;
-    }else{
-        smtlk.isConfigOneDevice = false;
-    }
+    smtlk.isConfigOneDevice = [self.switcher isOn];
 }
 
 -(void)showAlertWithMsg:(NSString *)msg
