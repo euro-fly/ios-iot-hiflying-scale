@@ -15,6 +15,7 @@
 - (void)viewDidLoad {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     _userID.text = [defaults stringForKey:@"userID"];
+    _myTimer = nil;
     if ([defaults objectForKey:@"secretMode"] != nil) {
         NSNumber *initialState = [defaults objectForKey:@"secretMode"];
         [_secretModeSwitch setOn:[initialState boolValue]];
@@ -36,13 +37,34 @@
     UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"init"];
     [self presentViewController:vc animated:YES completion:nil];
 }
-- (IBAction)secretModeSwitchPressed:(id)sender {
-    // [secretModeSwitch isOn]
+
+- (void) toggleSecretMode {
+    NSLog(@"Killing secret mode because the timer is up.");
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [_secretModeSwitch setOn:NO];
     [TCPHelper DeviceSecretMode:[defaults stringForKey:@"macAddress"] state:[_secretModeSwitch isOn]];
     [defaults setObject:[NSNumber numberWithBool:[_secretModeSwitch isOn]] forKey:@"secretMode"];
     [defaults synchronize];
-    
+}
+                                
+- (IBAction)secretModeSwitchPressed:(id)sender {
+    // [secretModeSwitch isOn]
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([_secretModeSwitch isOn]) {
+        _myTimer = [NSTimer scheduledTimerWithTimeInterval:300.0
+                                         target:self
+                                        selector:@selector(toggleSecretMode)
+                                       userInfo:nil
+                                        repeats:NO];
+    } else {
+        if (_myTimer != nil) {
+            [_myTimer invalidate];
+            _myTimer = nil;
+        }
+    }
+    [TCPHelper DeviceSecretMode:[defaults stringForKey:@"macAddress"] state:[_secretModeSwitch isOn]];
+    [defaults setObject:[NSNumber numberWithBool:[_secretModeSwitch isOn]] forKey:@"secretMode"];
+    [defaults synchronize];
 }
 @end
 

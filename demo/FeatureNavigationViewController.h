@@ -13,7 +13,8 @@
 - (IBAction)wifiConfigButtonPressed:(id)sender;
 @property (weak, nonatomic) IBOutlet UISwitch *secretModeSwitch;
 - (IBAction)secretModeSwitchPressed:(id)sender;
-
+@property (weak, nonatomic) NSTimer *myTimer;
+- (void)toggleSecretMode;
 //NavigateToReadData
 @property (weak, nonatomic) IBOutlet UIButton *readDataButton;
 - (IBAction)readDataButtonPressed:(id)sender;
