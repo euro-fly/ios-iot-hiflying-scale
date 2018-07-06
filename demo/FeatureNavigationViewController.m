@@ -30,16 +30,15 @@
 }
 - (IBAction)unbindButtonPressed:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    //[TCPHelper KillData:[defaults stringForKey:@"macAddress"]];
     [TCPHelper ConnectToDevice:[defaults stringForKey:@"macAddress"] state:NO];
     [defaults removeObjectForKey:@"macAddress"];
     [defaults removeObjectForKey:@"didSetup"];
+    [defaults removeObjectForKey:@"secretMode"];
     UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"init"];
     [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (void) toggleSecretMode {
-    NSLog(@"Killing secret mode because the timer is up.");
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [_secretModeSwitch setOn:NO];
     [TCPHelper DeviceSecretMode:[defaults stringForKey:@"macAddress"] state:[_secretModeSwitch isOn]];
@@ -48,7 +47,6 @@
 }
                                 
 - (IBAction)secretModeSwitchPressed:(id)sender {
-    // [secretModeSwitch isOn]
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([_secretModeSwitch isOn]) {
         _myTimer = [NSTimer scheduledTimerWithTimeInterval:300.0
