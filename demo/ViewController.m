@@ -23,8 +23,6 @@
 }
 @property (nonatomic) NSString* scaleMacAddress;
 @property (nonatomic) BOOL isReading;
-@property (weak, nonatomic) IBOutlet UIButton *netclearButton;
-- (IBAction)netclearButtonPressed:(id)sender;
 -(BOOL)startReading;
 -(void)stopReading;
 @property (nonatomic, strong) AVCaptureSession *captureSession;
@@ -45,10 +43,14 @@
     
     if (_scaleMacAddress != nil) {
         _myLabel.text = _scaleMacAddress;
-
+        _captureButton.enabled = false;
+        _unbindButton.enabled = true;
+        _butConnect.enabled = true;
     }
     else { // disable every other button if we are currently unbound...
-
+        _butConnect.enabled = false;
+        _readButton.enabled = false;
+        _unbindButton.enabled = false;
     }
     // Do any additional setup after loading the view, typically from a nib.
     smtlk = [HFSmartLink shareInstence];
@@ -63,10 +65,6 @@
     self.txtPwd.text = [self getspwdByssid:self.txtSSID.text];
     _txtPwd.delegate=self;
     _txtSSID.delegate=self;
-}
-
-- (IBAction)netclearButtonPressed:(id)sender {
-    [TCPHelper KillData:_scaleMacAddress];
 }
 
 - (BOOL)startReading {
@@ -114,7 +112,9 @@
             [_captureButton
              performSelectorOnMainThread:@selector(setTitle:) withObject:@"Bind Device" waitUntilDone:NO];
             _isReading = NO;
-
+            _butConnect.enabled = true;
+            _unbindButton.enabled = true;
+            _captureButton.enabled = false;
             [TCPHelper ConnectToDevice:_scaleMacAddress];
         }
     }
@@ -141,13 +141,15 @@
 }
 
 - (IBAction)unbindButtonPressed:(id)sender {
-    [TCPHelper KillData:_scaleMacAddress];
     _scaleMacAddress = nil;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:nil forKey:@"macAddress"];
     [defaults synchronize];
     _myLabel.text = @"NO MAC SAVED YET";
-
+    _captureButton.enabled = true;
+    _butConnect.enabled = false;
+    _readButton.enabled = false;
+    _unbindButton.enabled = false;
     
 }
 
