@@ -7,7 +7,6 @@
 //
 #import <UIKit/UIKit.h>
 @interface FeatureNavigationViewController : UIViewController
-//NavigateToWifiConfig
 @property (weak, nonatomic) IBOutlet UILabel *userID;
 @property (weak, nonatomic) IBOutlet UIButton *wifiConfigButton;
 - (IBAction)wifiConfigButtonPressed:(id)sender;
@@ -15,7 +14,6 @@
 - (IBAction)secretModeSwitchPressed:(id)sender;
 @property (weak, nonatomic) NSTimer *myTimer;
 - (void)toggleSecretMode;
-//NavigateToReadData
 @property (weak, nonatomic) IBOutlet UIButton *readDataButton;
 - (IBAction)readDataButtonPressed:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *unbindButton;
