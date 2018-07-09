@@ -13,6 +13,8 @@ extension Character {
     }
 }
 
+// SEND OUT NOTIFICATIONS PER FAILURE EVENT...
+// the notifications will only send a boolean as the object... true if the attempt succeeded, false if not
 @objc class TCPHelper: NSObject {
 
     //var client: TCPClient?
@@ -25,25 +27,32 @@ extension Character {
         while (byteArray.count < len) {
             byteArray += [0x00]
         }
-        return byteArray
+        return Array(byteArray.prefix(Int(len)))
     }
     
-    @objc static func ConnectToDevice(_ mac: String) {
+    @objc static func ConnectToDevice(_ mac: String, state: Bool) { //0x12 - register device
         let client = TCPClient(address: "api.swiftechie.com", port: Int32(7799))
         switch client.connect(timeout: 10) {
         case .success:
             print("Connected to host \(client.address)")
-            if let response = TCPHelper.sendRequest(using: client, mac: mac) {
+            if let response = TCPHelper.sendRequest(using: client, mac: mac, state:state) {
                 print("Response:")
                 print(response)
+                if (response[1] == 0x02) {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "0x12"), object: NSNumber.init(value: false))
+                }
+                else {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "0x12"), object: NSNumber.init(value: true))
+                }
             }
         case .failure(let error):
             print(String(describing: error))
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "0x12"), object: NSNumber.init(value: false))
         }
         client.close()
     }
     
-    @objc static func ReadData(_ mac: String) {
+    @objc static func ReadData(_ mac: String) { //0x11 - request data
         let client = TCPClient(address: "api.swiftechie.com", port: Int32(7799))
         switch client.connect(timeout: 10) {
         case .success:
@@ -58,7 +67,8 @@ extension Character {
         client.close()
     }
     
-    @objc static func KillData(_ mac: String) {
+    @objc static func KillData(_ mac: String) { //0x14 - net clear
+        print("[LOG] NetClear function called...");
         let client = TCPClient(address: "api.swiftechie.com", port: Int32(7799))
         switch client.connect(timeout: 10) {
         case .success:
@@ -69,6 +79,28 @@ extension Character {
             }
         case .failure(let error):
             print(String(describing: error))
+        }
+        client.close()
+    }
+    
+    @objc static func DeviceSecretMode(_ mac: String, state: Bool) { //0x12 - register device
+        let client = TCPClient(address: "api.swiftechie.com", port: Int32(7799))
+        switch client.connect(timeout: 10) {
+        case .success:
+            print("Connected to host \(client.address)")
+            if let response = TCPHelper.sendRequestFour(using: client, mac: mac, state: state) {
+                print("Response:")
+                print(response)
+                if (response[1] == 0x02) {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "0x12"), object: NSNumber.init(value: false))
+                }
+                else {
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "0x12"), object: NSNumber.init(value: true))
+                }
+            }
+        case .failure(let error):
+            print(String(describing: error))
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "0x12"), object: NSNumber.init(value: false))
         }
         client.close()
     }
@@ -96,12 +128,19 @@ extension Character {
         return Int32(value);
     }
     
-    static private func sendRequest(using client: TCPClient, mac: String) -> Array<Byte>? {
+    static private func sendRequest(using client: TCPClient, mac: String, state: Bool) -> Array<Byte>? {
         print("Sending data ... ")
+        var bit:[Byte] = []
+        if (state) {
+            bit = [0x01]
+        }
+        else {
+            bit = [0x02]
+        }
         var cmd:[Byte] = [0x12] + TCPHelper.asciiToHex(ascii: mac, len: 12) + // command id
-            [0x01] + // type: 0x01:register   0x02:unregister
-            TCPHelper.asciiToHex(ascii: "152894137336597697", len: 20) + // userid
-                [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00] // org
+            bit +
+            TCPHelper.asciiToHex(ascii: UserDefaults.standard.string(forKey: "userID")!, len: 20) + // userid
+            [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00] // org
         switch client.send(data: cmd) {
         case .success:
             print("Got a response...")
@@ -115,7 +154,7 @@ extension Character {
     static private func sendRequestTwo(using client: TCPClient, mac: String) -> Array<Byte>? {
         print("Sending data ... ")
         var cmd:[Byte] = [0x11] + TCPHelper.asciiToHex(ascii: mac, len: 12) + // command
-            TCPHelper.asciiToHex(ascii: "152894137336597697", len: 20) + // userid
+            TCPHelper.asciiToHex(ascii: UserDefaults.standard.string(forKey: "userID")!, len: 20) + // userid
             [0x00, 0x00, 0x00, 0x00] // get ALL data...
         switch client.send(data: cmd) {
         case .success:
@@ -140,6 +179,30 @@ extension Character {
         }
     }
     
+    static private func sendRequestFour(using client: TCPClient, mac: String, state: Bool) -> Array<Byte>? {
+        print("Sending data ... ")
+        var lastBit:[Byte] = []
+        if (state == true) {
+            print("Secret mode on!")
+            lastBit = [0x01]
+        }
+        else {
+            print("Secret mode off!")
+            lastBit = [0x02]
+        }
+        var cmd:[Byte] = [0x15] + TCPHelper.asciiToHex(ascii: mac, len: 12) + // command
+            TCPHelper.asciiToHex(ascii: UserDefaults.standard.string(forKey: "userID")!, len: 20) + // userid
+        lastBit
+        switch client.send(data: cmd) {
+        case .success:
+            print("Got a response...")
+            return TCPHelper.parseWeightData(data: TCPHelper.readResponse(from: client)!)
+        case .failure(let error):
+            print("Error: " + String(describing: error))
+            return nil
+        }
+    }
+    
     static private func readResponse(from client: TCPClient) -> Array<Byte>? {
         let response = client.read(1024*10, timeout: 600)
         print("Read response...")
@@ -150,13 +213,16 @@ extension Character {
     
     //TODO: Parse the response data...
     //ASSUMING we only get the last weight data...
+    // REWRITE THIS to return an array of an array of strings...
     static private func parseWeightData(data: Array<Byte>) -> Array<Byte>? {
-    
+        
         //var byteCount : Array<Byte> = [0x00, 0x00, 0x00, data[1]]
         //var number = byteArrayToInt(bytes: byteCount)   -- we can skip using the second byte as a counter, because... we know that the data will always be sent over in groups of 11.
         let instance = HTPeopleGeneral()
         var x = 2
+        var myData : Array<Array<String>> = []
         while x < data.count {
+            var dataSet : Array<String> = []
             let dateBytes : Array<Byte> = [data[x], data[x+1],data[x+2],data[x+3]]
             let impedanceBytes : Array<Byte> = [data[x+4], data[x+5],data[x+6],data[x+7]]
             let weightBytes : Array<Byte> = [0x00,0x00,data[x+8],data[x+9]]
@@ -166,6 +232,8 @@ extension Character {
             let weight = CGFloat(byteArrayToInt(bytes: weightBytes)) / 10
             let fat = instance.getBodyfatWithweightKg(weight, heightCm: 168, sex: HTSexType.male, age: 30, impedance: Int(impedance))
             print("DATA:")
+            dataSet.append(String(describing: date))
+            dataSet.append(weight.description)
             print(date)
             print(weight)
             var myFat : String
@@ -190,12 +258,12 @@ extension Character {
                 print("An unexpected error occurred.")
                 myFat = "NaN"
             }
-            let msg = String(format: "体重：%@　体脂肪率：%@", weight.description, myFat)
-            let alert = UIAlertController(title: String(describing: date), message: msg, preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler:nil))
-            UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
+            dataSet.append(myFat)
+            myData.append(dataSet)
+            
             x+=11
         }
+        UserDefaults.standard.set(myData, forKey: "dataSet")
         return data
     }
     
