@@ -29,7 +29,6 @@
     [TCPHelper ConnectToDevice:[defaults stringForKey:@"macAddress"] state:NO];
     [defaults removeObjectForKey:@"macAddress"];
     [defaults removeObjectForKey:@"didSetup"];
-    [defaults removeObjectForKey:@"secretMode"];
     UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"init"];
     [self presentViewController:vc animated:YES completion:nil];
 }
