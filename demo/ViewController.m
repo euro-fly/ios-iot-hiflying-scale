@@ -14,6 +14,11 @@
 #import "HTBodyfat.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
 
+#if __has_feature(objc_arc)
+#define DLog(format, ...) CFShow((__bridge CFStringRef)[NSString stringWithFormat:format, ## __VA_ARGS__]);
+#else
+#define DLog(format, ...) CFShow([NSString stringWithFormat:format, ## __VA_ARGS__]);
+#endif
 
 @interface ViewController ()
 {
@@ -141,11 +146,11 @@
 
 - (id)fetchSSIDInfo {
     NSArray *ifs = (__bridge_transfer id)CNCopySupportedInterfaces();
-    NSLog(@"Supported interfaces: %@", ifs);
+    DLog(@"[log] %@", ifs[0]);
     id info = nil;
     for (NSString *ifnam in ifs) {
         info = (__bridge_transfer id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)ifnam);
-        NSLog(@"%@ => %@", ifnam, info);
+        DLog(@"[log] %@", info);
         if (info && [info count]) { break; }
     }
     return info;

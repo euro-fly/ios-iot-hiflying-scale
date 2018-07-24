@@ -24,6 +24,10 @@
 - (IBAction)readDataButtonPressed:(id)sender {
     [self performSegueWithIdentifier:@"NavigateToReadData" sender:self];
 }
+- (IBAction)unitSelectorPressed:(id)sender {
+    
+}
+
 - (IBAction)unbindButtonPressed:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [TCPHelper ConnectToDevice:[defaults stringForKey:@"macAddress"] state:NO];

@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *readDataButton;
 - (IBAction)readDataButtonPressed:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *unbindButton;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *unitSelector;
+- (IBAction)unitSelectorPressed:(id)sender;
 - (IBAction)unbindButtonPressed:(id)sender;
-
 @end
