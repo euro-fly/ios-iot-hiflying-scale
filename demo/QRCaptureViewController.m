@@ -93,7 +93,7 @@
             _isReading = NO;
             [[NSNotificationCenter defaultCenter]
              postNotificationName:@"macAddress"
-             object:[[NSNumber alloc] initWithBool:validData]]; // send the notice so that we
+             object:[[NSNumber alloc] initWithBool:validData]];
             
         }
     }

@@ -24,9 +24,17 @@
 - (IBAction)readDataButtonPressed:(id)sender {
     [self performSegueWithIdentifier:@"NavigateToReadData" sender:self];
 }
-- (IBAction)unitSelectorPressed:(id)sender {
-    
+
+- (void)alertView:(UIAlertView *)alertView
+    clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == [alertView cancelButtonIndex]){
+        
+    }else{
+        NSLog(@"Killing timer.");
+        [self toggleSecretMode];
+    }
 }
+
 
 - (IBAction)unbindButtonPressed:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -39,13 +47,75 @@
 
 - (void) toggleSecretMode {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [_secretModeSwitch setOn:NO];
-    [TCPHelper DeviceSecretMode:[defaults stringForKey:@"macAddress"] state:[_secretModeSwitch isOn]];
+    [defaults setBool:NO forKey:@"secretMode"];
+    if (_myTimer != nil) {
+        [_myTimer invalidate];
+        [_secondTimer invalidate];
+        _myTimer = nil;
+        _secondTimer = nil;
+    }
+}
+
+-(void)showAlertWithMsg:(NSString *)msg
+                  title:(NSString*)title{
+    if (_countdownPopup == nil) {
+        _countdownPopup = [[UIAlertView alloc]initWithTitle:title message:[self tickTimer] delegate:self cancelButtonTitle:@"cancel" otherButtonTitles:@"ok", nil];
+    }
+    [_countdownPopup show];
+}
+
+-(NSString *)tickTimer {
+    float counter = _myTimer.fireDate.timeIntervalSinceNow;
+    int minutes = ((int) counter % 3600) / 60;
+    int seconds = ((int) counter % 3600) % 60;
+    NSLog(@"%f %d %d", counter, minutes, seconds);
+    _timeRemaining = [NSString stringWithFormat:@"%02d:%02d", minutes, seconds];
+    return _timeRemaining;
 }
                                 
-- (IBAction)secretModeSwitchPressed:(id)sender {
+- (IBAction)secretModeButtonPressed:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [TCPHelper DeviceSecretMode:[defaults stringForKey:@"macAddress"] state:[_secretModeSwitch isOn]];
+    NSLog(@"timer...");
+    if ([defaults boolForKey:@"secretMode"] != nil) {
+        NSLog(@"boolean exists...");
+        if ([defaults boolForKey:@"secretMode"] == YES) {
+            NSLog(@"boolean is true.");
+            [self showAlertWithMsg:@"Time Remaining" title:@"時間残り"];
+        }
+        else {
+            [defaults setBool:YES forKey:@"secretMode"];
+            _timeRemaining = @"05:00";
+            _myTimer = [NSTimer scheduledTimerWithTimeInterval:300.0
+                                                        target:self
+                                                      selector:@selector(toggleSecretMode)
+                                                      userInfo:nil
+                                                       repeats:NO];
+            
+            _secondTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                                            target:self
+                                                          selector:@selector(tickTimer)
+                                                          userInfo:nil
+                                                           repeats:YES];
+            [self showAlertWithMsg:@"Time Remaining" title:@"時間残り"];
+        }
+    }
+    else {
+        [defaults setBool:YES forKey:@"secretMode"];
+        _timeRemaining = @"05:00";
+        _myTimer = [NSTimer scheduledTimerWithTimeInterval:300.0
+                                                    target:self
+                                                  selector:@selector(toggleSecretMode)
+                                                  userInfo:nil
+                                                   repeats:NO];
+        
+        _secondTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                                        target:self
+                                                      selector:@selector(tickTimer)
+                                                      userInfo:nil
+                                                       repeats:YES];
+        [self showAlertWithMsg:@"Time Remaining" title:@"時間残り"];
+    }
 }
+
 @end
 
