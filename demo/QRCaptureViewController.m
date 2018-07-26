@@ -52,6 +52,7 @@
     UIImage *img = [UIImage imageNamed:@"reticle.png"];
     UIImageView *imageView = [[UIImageView alloc] initWithImage:img];
     imageView.frame = _viewPreview.layer.bounds;
+    imageView.contentMode = UIViewContentModeScaleAspectFill; // ensure that our frame doesn't warp
     [captureMetadataOutput setMetadataObjectsDelegate:self queue:dispatchQueue];
     [captureMetadataOutput setMetadataObjectTypes:[NSArray arrayWithObject:AVMetadataObjectTypeQRCode]];
     _videoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:_captureSession];
@@ -59,7 +60,7 @@
     [_videoPreviewLayer setFrame:_viewPreview.layer.bounds];
     [_viewPreview.layer addSublayer:_videoPreviewLayer];
     [_viewPreview addSubview:imageView];
-    [self.view bringSubviewToFront:_cancelButton];
+    [self.view bringSubviewToFront:_cancelButton]; // move cancelbutton to front to make sure user can cancel always
     [_captureSession startRunning];
     return YES;
 }
@@ -77,7 +78,7 @@
             NSString *qrValue = [metadataObj stringValue];
             BOOL validData;
             NSLog(@"[length] %lu", (unsigned long)[qrValue length]);
-            if ([qrValue length] < 31 || ![[qrValue substringWithRange:NSMakeRange(0, 6)] isEqualToString:@"S1MAC:"]) {
+            if ([qrValue length] < 31 || ![[qrValue substringWithRange:NSMakeRange(0, 6)] isEqualToString:@"S1MAC:"]) { // this is purely arbitrary and based on a different application's implementation... in the absence of actual specification we're going with this. Obviously this makes our application break if ever HF's specification for QR codes changes.
                 validData = NO;
             }
             else {
@@ -92,7 +93,7 @@
             _isReading = NO;
             [[NSNotificationCenter defaultCenter]
              postNotificationName:@"macAddress"
-             object:[[NSNumber alloc] initWithBool:validData]];
+             object:[[NSNumber alloc] initWithBool:validData]]; // send the notice so that we
             
         }
     }
