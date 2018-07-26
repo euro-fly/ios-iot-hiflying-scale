@@ -49,12 +49,17 @@
     [_captureSession addOutput:captureMetadataOutput];
     dispatch_queue_t dispatchQueue;
     dispatchQueue = dispatch_queue_create("myQueue", NULL);
+    UIImage *img = [UIImage imageNamed:@"reticle.png"];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:img];
+    imageView.frame = _viewPreview.layer.bounds;
     [captureMetadataOutput setMetadataObjectsDelegate:self queue:dispatchQueue];
     [captureMetadataOutput setMetadataObjectTypes:[NSArray arrayWithObject:AVMetadataObjectTypeQRCode]];
     _videoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:_captureSession];
     [_videoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
     [_videoPreviewLayer setFrame:_viewPreview.layer.bounds];
     [_viewPreview.layer addSublayer:_videoPreviewLayer];
+    [_viewPreview addSubview:imageView];
+    [self.view bringSubviewToFront:_cancelButton];
     [_captureSession startRunning];
     return YES;
 }
