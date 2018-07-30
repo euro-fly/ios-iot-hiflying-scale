@@ -35,6 +35,11 @@
     }
 }
 
+-(void)showAlertWithMsg:(NSString *)msg
+                  title:(NSString*)title{
+    UIAlertView * alert = [[UIAlertView alloc]initWithTitle:title message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+    [alert show];
+}
 
 - (IBAction)unbindButtonPressed:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -54,12 +59,12 @@
         _myTimer = nil;
         _secondTimer = nil;
     }
+    _timeRemaining = @"05:00";
 }
 
--(void)showAlertWithMsg:(NSString *)msg
-                  title:(NSString*)title{
+-(void)showCountdown{
     if (_countdownPopup == nil) {
-        _countdownPopup = [[UIAlertView alloc]initWithTitle:title message:[self tickTimer] delegate:self cancelButtonTitle:@"cancel" otherButtonTitles:@"ok", nil];
+        _countdownPopup = [[UIAlertView alloc]initWithTitle:@"秘密モード時間残り" message:_timeRemaining delegate:self cancelButtonTitle:@"戻る" otherButtonTitles:@"停止", nil];
     }
     [_countdownPopup show];
 }
@@ -68,52 +73,48 @@
     float counter = _myTimer.fireDate.timeIntervalSinceNow;
     int minutes = ((int) counter % 3600) / 60;
     int seconds = ((int) counter % 3600) % 60;
-    NSLog(@"%f %d %d", counter, minutes, seconds);
+    
     _timeRemaining = [NSString stringWithFormat:@"%02d:%02d", minutes, seconds];
+    _countdownPopup.message = _timeRemaining;
     return _timeRemaining;
 }
                                 
+- (IBAction)secretModeInfoButtonPressed:(id)sender {
+    [self showAlertWithMsg:@"秘密モードはみんなに内緒のモードである。" title:@"秘密モードについて"];
+}
+
+- (void)startTimer {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:YES forKey:@"secretMode"];
+    _timeRemaining = @"04:59";
+    [self showCountdown];
+    _myTimer = [NSTimer scheduledTimerWithTimeInterval:300.0
+                                                target:self
+                                              selector:@selector(toggleSecretMode)
+                                              userInfo:nil
+                                               repeats:NO];
+    _secondTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
+                                                    target:self                                                  selector:@selector(tickTimer)
+                                                  userInfo:nil
+                                                   repeats:YES];
+    
+}
+
 - (IBAction)secretModeButtonPressed:(id)sender {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSLog(@"timer...");
     if ([defaults boolForKey:@"secretMode"] != nil) {
         NSLog(@"boolean exists...");
-        if ([defaults boolForKey:@"secretMode"] == YES) {
+        if ([defaults boolForKey:@"secretMode"] == YES && _myTimer != nil && _secondTimer != nil) {
             NSLog(@"boolean is true.");
-            [self showAlertWithMsg:@"Time Remaining" title:@"時間残り"];
+            [self showCountdown];
         }
         else {
-            [defaults setBool:YES forKey:@"secretMode"];
-            _timeRemaining = @"05:00";
-            _myTimer = [NSTimer scheduledTimerWithTimeInterval:300.0
-                                                        target:self
-                                                      selector:@selector(toggleSecretMode)
-                                                      userInfo:nil
-                                                       repeats:NO];
-            
-            _secondTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
-                                                            target:self
-                                                          selector:@selector(tickTimer)
-                                                          userInfo:nil
-                                                           repeats:YES];
-            [self showAlertWithMsg:@"Time Remaining" title:@"時間残り"];
+            [self startTimer];
         }
     }
     else {
-        [defaults setBool:YES forKey:@"secretMode"];
-        _timeRemaining = @"05:00";
-        _myTimer = [NSTimer scheduledTimerWithTimeInterval:300.0
-                                                    target:self
-                                                  selector:@selector(toggleSecretMode)
-                                                  userInfo:nil
-                                                   repeats:NO];
-        
-        _secondTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
-                                                        target:self
-                                                      selector:@selector(tickTimer)
-                                                      userInfo:nil
-                                                       repeats:YES];
-        [self showAlertWithMsg:@"Time Remaining" title:@"時間残り"];
+        [self startTimer];
     }
 }
 

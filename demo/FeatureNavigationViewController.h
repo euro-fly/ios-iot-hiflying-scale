@@ -12,6 +12,8 @@
 - (IBAction)wifiConfigButtonPressed:(id)sender;
 @property (weak, nonatomic) IBOutlet UISwitch *secretModeSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *secretModeButton;
+@property (weak, nonatomic) IBOutlet UIButton *secretModeInfoButton;
+- (IBAction)secretModeInfoButtonPressed:(id)sender;
 - (IBAction)secretModeButtonPressed:(id)sender;
 - (IBAction)secretModeSwitchPressed:(id)sender;
 @property (weak, nonatomic) NSTimer *myTimer;

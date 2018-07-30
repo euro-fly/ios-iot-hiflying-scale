@@ -126,14 +126,34 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rvw-fd-URd">
-                                <rect key="frame" x="134" y="210.5" width="107" height="30"/>
+                                <rect key="frame" x="134" y="211" width="107" height="30"/>
                                 <state key="normal" title="WiFiコンフィグ"/>
                                 <connections>
                                     <action selector="wifiConfigButtonPressed:" destination="ddT-nb-DYf" eventType="touchUpInside" id="mI5-Pr-tPf"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7qI-zz-zxW">
+                                <rect key="frame" x="141" y="257" width="92" height="30"/>
+                                <state key="normal" title="体重情報取得"/>
+                                <connections>
+                                    <action selector="readDataButtonPressed:" destination="ddT-nb-DYf" eventType="touchUpInside" id="ZRQ-t4-VYY"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2rH-mA-uCr">
+                                <rect key="frame" x="166" y="94" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MIO-Ng-c9g">
+                                <rect key="frame" x="149" y="356" width="77" height="30"/>
+                                <state key="normal" title="秘密モード"/>
+                                <connections>
+                                    <action selector="secretModeButtonPressed:" destination="ddT-nb-DYf" eventType="touchUpInside" id="9dw-9v-KUD"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fAG-nO-S28">
-                                <rect key="frame" x="141" y="420.5" width="92" height="30"/>
+                                <rect key="frame" x="141" y="510" width="92" height="30"/>
                                 <state key="normal" title="アンバインド">
                                     <color key="titleColor" red="1" green="0.023286350454939653" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -141,61 +161,35 @@
                                     <action selector="unbindButtonPressed:" destination="ddT-nb-DYf" eventType="touchUpInside" id="JbI-qt-C7D"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7qI-zz-zxW">
-                                <rect key="frame" x="141" y="318.5" width="92" height="30"/>
-                                <state key="normal" title="体重情報取得"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="igH-MH-tLx">
+                                <rect key="frame" x="126" y="394" width="123" height="30"/>
+                                <state key="normal" title="秘密モードとは？"/>
                                 <connections>
-                                    <action selector="readDataButtonPressed:" destination="ddT-nb-DYf" eventType="touchUpInside" id="ZRQ-t4-VYY"/>
-                                </connections>
-                            </button>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ed1-4H-djn">
-                                <rect key="frame" x="184" y="484.5" width="51" height="31"/>
-                                <connections>
-                                    <action selector="secretModeSwitchPressed:" destination="ddT-nb-DYf" eventType="valueChanged" id="ie2-cA-eeD"/>
-                                </connections>
-                            </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="秘密モード" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0q4-pS-hK8">
-                                <rect key="frame" x="67" y="489.5" width="87" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2rH-mA-uCr">
-                                <rect key="frame" x="166" y="155.5" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MIO-Ng-c9g">
-                                <rect key="frame" x="149" y="552" width="77" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="秘密モード"/>
-                                <connections>
-                                    <action selector="secretModeButtonPressed:" destination="ddT-nb-DYf" eventType="touchUpInside" id="9dw-9v-KUD"/>
+                                    <action selector="secretModeInfoButtonPressed:" destination="ddT-nb-DYf" eventType="touchUpInside" id="ygB-KR-FwP"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="0q4-pS-hK8" firstAttribute="leading" secondItem="wBC-6a-Cte" secondAttribute="leadingMargin" constant="51" id="2B6-Fi-eEL"/>
-                            <constraint firstItem="ed1-4H-djn" firstAttribute="top" secondItem="fAG-nO-S28" secondAttribute="bottom" constant="34" id="3yD-l9-l3c"/>
                             <constraint firstItem="7qI-zz-zxW" firstAttribute="leading" secondItem="fAG-nO-S28" secondAttribute="leading" id="9LL-j1-En1"/>
-                            <constraint firstItem="0q4-pS-hK8" firstAttribute="centerY" secondItem="ed1-4H-djn" secondAttribute="centerY" id="APB-kg-baP"/>
-                            <constraint firstItem="fAG-nO-S28" firstAttribute="top" secondItem="7qI-zz-zxW" secondAttribute="bottom" constant="72" id="AqH-rX-C7V"/>
+                            <constraint firstItem="2rH-mA-uCr" firstAttribute="top" secondItem="ETO-89-fMt" secondAttribute="bottom" constant="30" id="9XR-Ji-i3g"/>
+                            <constraint firstItem="fAG-nO-S28" firstAttribute="top" secondItem="7qI-zz-zxW" secondAttribute="bottom" constant="223" id="AqH-rX-C7V"/>
+                            <constraint firstItem="2rH-mA-uCr" firstAttribute="centerX" secondItem="wBC-6a-Cte" secondAttribute="centerX" id="IaC-wb-O51"/>
+                            <constraint firstItem="igH-MH-tLx" firstAttribute="top" secondItem="MIO-Ng-c9g" secondAttribute="bottom" constant="8" id="WMS-mv-nx1"/>
+                            <constraint firstItem="igH-MH-tLx" firstAttribute="centerX" secondItem="fAG-nO-S28" secondAttribute="centerX" id="Y2b-Gq-5rg"/>
                             <constraint firstItem="2rH-mA-uCr" firstAttribute="centerX" secondItem="rvw-fd-URd" secondAttribute="centerX" id="a0y-zV-aIy"/>
-                            <constraint firstItem="rvw-fd-URd" firstAttribute="top" secondItem="2rH-mA-uCr" secondAttribute="bottom" constant="34" id="axd-7G-aCa"/>
-                            <constraint firstItem="7qI-zz-zxW" firstAttribute="centerY" secondItem="wBC-6a-Cte" secondAttribute="centerY" id="dwO-mf-Ctm"/>
-                            <constraint firstItem="7qI-zz-zxW" firstAttribute="top" secondItem="rvw-fd-URd" secondAttribute="bottom" constant="78" id="eo8-40-2rW"/>
-                            <constraint firstItem="rvw-fd-URd" firstAttribute="centerX" secondItem="wBC-6a-Cte" secondAttribute="centerX" id="hHD-HQ-Q3p"/>
+                            <constraint firstItem="rvw-fd-URd" firstAttribute="top" secondItem="2rH-mA-uCr" secondAttribute="bottom" constant="96" id="axd-7G-aCa"/>
+                            <constraint firstItem="7qI-zz-zxW" firstAttribute="top" secondItem="rvw-fd-URd" secondAttribute="bottom" constant="16" id="eo8-40-2rW"/>
                             <constraint firstItem="rvw-fd-URd" firstAttribute="leading" secondItem="7qI-zz-zxW" secondAttribute="leading" constant="-7" id="iRK-TD-NVV"/>
-                            <constraint firstItem="ed1-4H-djn" firstAttribute="leading" secondItem="0q4-pS-hK8" secondAttribute="trailing" constant="30" id="oEB-IC-mpy"/>
+                            <constraint firstItem="igH-MH-tLx" firstAttribute="centerX" secondItem="MIO-Ng-c9g" secondAttribute="centerX" id="qjB-DV-gJ3"/>
+                            <constraint firstItem="aTP-3K-sz7" firstAttribute="top" secondItem="igH-MH-tLx" secondAttribute="bottom" constant="243" id="tec-lL-E9I"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Main Menu" id="fdr-Si-EO8"/>
                     <connections>
                         <outlet property="readDataButton" destination="7qI-zz-zxW" id="szp-wn-2SV"/>
                         <outlet property="secretModeButton" destination="MIO-Ng-c9g" id="eAd-QU-vRr"/>
-                        <outlet property="secretModeSwitch" destination="ed1-4H-djn" id="jEn-oX-D63"/>
+                        <outlet property="secretModeInfoButton" destination="igH-MH-tLx" id="w8X-VZ-0Mz"/>
                         <outlet property="unbindButton" destination="fAG-nO-S28" id="DEI-J5-NqM"/>
                         <outlet property="userID" destination="2rH-mA-uCr" id="i35-TJ-Z4V"/>
                         <outlet property="wifiConfigButton" destination="rvw-fd-URd" id="Twx-Bs-8dC"/>
@@ -223,7 +217,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="myCell" id="RNR-80-OJz">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="myCell" id="RNR-80-OJz">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RNR-80-OJz" id="0dS-eO-l0Y">
