@@ -20,7 +20,7 @@
     [super viewDidAppear:animated];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([defaults stringForKey:@"userID"] == nil) {
-        NSString *uuid = [[NSUUID UUID] UUIDString];
+        NSString *uuid = [[NSUUID UUID] UUIDString]; // we generate a UUID which makes 秘密モード　testable.
         [defaults setObject:uuid forKey:@"userID"];
         [defaults synchronize];
     }

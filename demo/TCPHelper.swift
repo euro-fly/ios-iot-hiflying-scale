@@ -228,11 +228,14 @@ extension Character {
             let weightBytes : Array<Byte> = [0x00,0x00,data[x+8],data[x+9]]
             let timestamp = byteArrayToInt(bytes: dateBytes)
             let date = unixTimeToNSDate(time: timestamp)
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let dateString = formatter.string(from: date as Date)
             let impedance = byteArrayToInt(bytes: impedanceBytes)
             let weight = CGFloat(byteArrayToInt(bytes: weightBytes)) / 10
             let fat = instance.getBodyfatWithweightKg(weight, heightCm: 168, sex: HTSexType.male, age: 30, impedance: Int(impedance))
             print("DATA:")
-            dataSet.append(String(describing: date))
+            dataSet.append(dateString)
             dataSet.append(weight.description)
             print(date)
             print(weight)
@@ -240,23 +243,25 @@ extension Character {
             switch(fat) {
             case HTBodyfatErrorType.none:
                 print(instance.htBodyfatPercentage)
-                myFat = instance.htBodyfatPercentage.description
+                let fatRounded = Double(round(instance.htBodyfatPercentage * 100)/100)
+                // round to two decimal places
+                myFat = String(fatRounded)
                 break
             case HTBodyfatErrorType.age:
-                print("Error occurred due to age being outside 6..99 range")
-                myFat = "NaN"
+                // age outside 6-99 y/o range
+                myFat = "(エラー：年齢)"
                 break
             case HTBodyfatErrorType.impedance:
-                print("Error occurred due to invalid impedance data.")
-                myFat = "NaN"
+                // unexpected impedance value (e.g., wearing socks)
+                myFat = "(エラー：電気抵抗)"
                 break
             case HTBodyfatErrorType.weight:
-                print("Error occurred due to weight being outside 50..200kg range")
-                myFat = "NaN"
+                // weight outside 50-200kg range
+                myFat = "(エラー：体重)"
                 break
             default:
-                print("An unexpected error occurred.")
-                myFat = "NaN"
+                // unidentified error type
+                myFat = "(エラー：未確認)"
             }
             dataSet.append(myFat)
             myData.append(dataSet)

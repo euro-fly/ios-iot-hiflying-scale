@@ -86,18 +86,18 @@
 - (void)startTimer {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:YES forKey:@"secretMode"];
-    _timeRemaining = @"04:59";
+    _timeRemaining = @"05:00";
     [self showCountdown];
     _myTimer = [NSTimer scheduledTimerWithTimeInterval:300.0
                                                 target:self
                                               selector:@selector(toggleSecretMode)
                                               userInfo:nil
-                                               repeats:NO];
+                                               repeats:NO]; // primary timer to show
+    [self tickTimer];
     _secondTimer = [NSTimer scheduledTimerWithTimeInterval:1.0
                                                     target:self                                                  selector:@selector(tickTimer)
                                                   userInfo:nil
-                                                   repeats:YES];
-    
+                                                   repeats:YES]; // secondary timer to update our countdown popup
 }
 
 - (IBAction)secretModeButtonPressed:(id)sender {

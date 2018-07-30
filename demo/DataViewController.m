@@ -29,13 +29,21 @@
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"myCell" forIndexPath:indexPath];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@ %@", _data[indexPath.row][0], _data[indexPath.row][1], _data[indexPath.row][2]];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@: %@kg %@\%", _data[indexPath.row][0], _data[indexPath.row][1], _data[indexPath.row][2]];
     return cell;
     
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.data.count;
+}
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    //_data[indexPath.row][0] - date
+    //_data[indexPath.row][1] - weight
+    //_data[indexPath.row][2]] - bodyfat
+    // this should convert these strings into a format that joule can actually put into the database...
+    
 }
 
 
