@@ -23,17 +23,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Qt9-Kp-DXd">
-                                <rect key="frame" x="32" y="80" width="311" height="30"/>
+                                <rect key="frame" x="32" y="124" width="311" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="wujianyu" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R14-ME-uVA">
-                                <rect key="frame" x="32" y="135" width="311" height="30"/>
+                                <rect key="frame" x="32" y="179" width="311" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M2K-Ex-yds">
-                                <rect key="frame" x="32" y="216" width="311" height="30"/>
+                                <rect key="frame" x="32" y="260" width="311" height="30"/>
                                 <color key="backgroundColor" red="0.31764705879999999" green="0.73725490199999999" blue="0.098039215690000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="connect">
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -43,16 +43,16 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NO MAC SAVED YET" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ANq-OS-WMB">
-                                <rect key="frame" x="32" y="28" width="311" height="21"/>
+                                <rect key="frame" x="32" y="72" width="311" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="anH-68-myp">
-                                <rect key="frame" x="32" y="270" width="311" height="2"/>
+                                <rect key="frame" x="32" y="314" width="311" height="2"/>
                             </progressView>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="krm-qM-O3l">
-                                <rect key="frame" x="294" y="175" width="51" height="31"/>
+                                <rect key="frame" x="294" y="219" width="51" height="31"/>
                                 <connections>
                                     <action selector="swPressed:" destination="BYZ-38-t0r" eventType="valueChanged" id="Vio-gI-Q6L"/>
                                 </connections>
@@ -64,7 +64,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="V7.x" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ICH-LN-aj3">
-                                <rect key="frame" x="311" y="57" width="32" height="21"/>
+                                <rect key="frame" x="311" y="101" width="32" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="0hP-Bu-RdB"/>
                                     <constraint firstAttribute="width" constant="32" id="bEB-mF-gRV"/>
@@ -410,7 +410,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="eUJ-Mr-erF"/>
+        <segue reference="amc-2I-Kr4"/>
         <segue reference="cHb-jO-DhW"/>
     </inferredMetricsTieBreakers>
 </document>
